@@ -20,6 +20,7 @@ Listings on Bazoš are sorted by the date of creation. The site allows you to pu
 - Edit Files/Config.json
     - Input name, phone number & password associated with your listings
     - Input the "bid" and "bkod" cookies from your browser after verifying your phone number
+    - Edit the number of days after which listings should renew, default is 2 
 - Run again!
 
 # FOR EDUCATIONAL PURPOSES ONLY
