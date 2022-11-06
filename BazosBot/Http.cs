@@ -52,7 +52,7 @@ internal sealed class Http : IDisposable
             BuildCookie("bjmeno", config.Jmeno),
             BuildCookie("btelefon", config.TelCislo.ToString()),
             BuildCookie("bid", config.BIdCookie.ToString()),
-            BuildCookie("bkod", "58TDJXW48P")
+            BuildCookie("bkod", config.BKodCookie)
         });
     }
 
