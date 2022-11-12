@@ -8,7 +8,7 @@ Bot for the marketplace portal Bazoš, it operates in several countries in centr
 - [Bazos.pl](https://bazos.pl)
 - [Bazos.at](https://bazos.at)
 
-**The bot works only for the .cz version**
+**The bot supports all above mentioned locations!**
 
 # Intent
 
