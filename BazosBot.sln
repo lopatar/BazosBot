@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BazosBot", "BazosBot\BazosBot.csproj", "{04F2E388-1D9F-4231-9306-BC5862BDD6CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BazosBotv2", "BazosBotv2\BazosBotv2.csproj", "{79A56671-D43E-41B8-B396-457E5FFB5F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04F2E388-1D9F-4231-9306-BC5862BDD6CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04F2E388-1D9F-4231-9306-BC5862BDD6CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04F2E388-1D9F-4231-9306-BC5862BDD6CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04F2E388-1D9F-4231-9306-BC5862BDD6CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A56671-D43E-41B8-B396-457E5FFB5F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A56671-D43E-41B8-B396-457E5FFB5F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A56671-D43E-41B8-B396-457E5FFB5F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A56671-D43E-41B8-B396-457E5FFB5F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
