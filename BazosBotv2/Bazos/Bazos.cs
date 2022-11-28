@@ -60,6 +60,13 @@ internal sealed class Bazos
                             .Replace("[", "")
                             .Replace("]", "");
 
+                        if (listingDateString.Contains("TOP") && _config.SkipTopListings)
+                        {
+                            continue;
+                        }
+
+                        listingDateString.Replace("TOP", "");
+                        
                         listingLink = linkElement.GetAttribute("href") ?? "";
                         listingName = imgElement.GetAttribute("alt") ?? "";
                         break;

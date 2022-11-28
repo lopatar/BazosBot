@@ -9,17 +9,25 @@ var enabledConfigs = ConfigLoader.GetEnabledConfigs();
 
 foreach (var enabledConfig in enabledConfigs)
 {
-    var bazos = new Bazos(enabledConfig);
-    var dueListings = bazos.GetDueListings();
-    Utils.Print($"Got {dueListings.Count} due listings! Press any key to continue...",
-        location: enabledConfig.BazosLocation);
-    Console.ReadKey();
+    //try
+    //{
+        var bazos = new Bazos(enabledConfig);
+        var dueListings = bazos.GetDueListings();
+        Utils.Print($"Got {dueListings.Count} due listings! Press any key to continue...",
+            location: enabledConfig.BazosLocation);
+        Console.ReadKey();
 
-    foreach (var listing in dueListings)
-    {
-        Utils.Print($"Trying to renew listing: {listing.Name}", location: enabledConfig.BazosLocation);
-        listing.Renew();
-    }
+        foreach (var listing in dueListings)
+        {
+            Utils.Print($"Trying to renew listing: {listing.Name}", location: enabledConfig.BazosLocation);
+            listing.Renew();
+        }
+    //}
+    //catch (Exception ex)
+    //{
+      //  Utils.Print("Error occured! Please change your config file!", true, enabledConfig.BazosLocation);
+       // Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}");
+    //}
 }
 
 Utils.Exit("Bot finished!");

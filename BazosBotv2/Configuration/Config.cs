@@ -11,10 +11,11 @@ internal struct Config
     public readonly uint UserCookieBId;
     public readonly string UserCookieBKod;
     public readonly uint ListingDaysUntilRenewal;
-
+    public readonly bool SkipTopListings;
+    
     public Config(string bazosLocation, bool enabled, string userName, string userPassword, string userEmail,
         uint userPhoneNum,
-        uint userCookieBId, string userCookieBKod, uint listingDaysUntilRenewal)
+        uint userCookieBId, string userCookieBKod, uint listingDaysUntilRenewal, bool skipTopListings)
     {
         BazosLocation = bazosLocation;
         Enabled = enabled;
@@ -25,5 +26,6 @@ internal struct Config
         UserCookieBId = userCookieBId;
         UserCookieBKod = userCookieBKod;
         ListingDaysUntilRenewal = listingDaysUntilRenewal;
+        SkipTopListings = skipTopListings;
     }
 }

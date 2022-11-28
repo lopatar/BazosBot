@@ -58,7 +58,7 @@ internal static class ConfigLoader
         foreach (var bazosType in BazosTypes)
         {
             var config = new Config(bazosType, false, "First Last", "Password", "test@example.com", 606606606, 88888888,
-                "XYXYXYXYXY", 2);
+                "XYXYXYXYXY", 2, true);
 
             Utils.Print($"Creating config for {nameof(config.BazosLocation)}: {bazosType}");
             dummyConfigs.Add(config);

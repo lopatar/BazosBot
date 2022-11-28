@@ -49,8 +49,8 @@ internal sealed class BazosListing
     public void Renew()
     {
         DownloadBazosImages();
-        DeleteFromBazos();
-        CreateListing();
+        //DeleteFromBazos();
+        //CreateListing();
     }
 
     public bool IsDueForRenewal()
