@@ -25,7 +25,7 @@ foreach (var enabledConfig in enabledConfigs)
     }
     catch (Exception ex)
     {
-         Utils.Print("Error occured! Please change your config file!", true, enabledConfig.BazosLocation);
+        Utils.Print("Error occured! Please change your config file!", true, enabledConfig.BazosLocation);
         Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}");
     }
 }

@@ -49,6 +49,8 @@ internal sealed class Bazos
             string listingName = "", listingLink = "", listingDateString = "";
             uint listingPrice = 0, listingPostalCode = 0;
 
+            var skipCycle = false;
+            
             foreach (var listingDiv in listing.Children)
                 switch (listingDiv.GetAttribute("class"))
                 {
@@ -59,16 +61,18 @@ internal sealed class Bazos
                         listingDateString = listingDiv.Children[2].TextContent.Replace(" ", "").Replace("-", "")
                             .Replace("[", "")
                             .Replace("]", "");
-
+                        
+                        listingName = imgElement.GetAttribute("alt") ?? "";
+                        
                         if (listingDateString.Contains("TOP") && _config.SkipTopListings)
                         {
-                            continue;
+                            Utils.Print($"Skipping TOP listing: {listingName}", location: _config.BazosLocation);
+                            skipCycle = true;
+                            break;
                         }
-
-                        listingDateString.Replace("TOP", "");
                         
+                        listingDateString = listingDateString.Replace("TOP", "");
                         listingLink = linkElement.GetAttribute("href") ?? "";
-                        listingName = imgElement.GetAttribute("alt") ?? "";
                         break;
                     case "inzeratycena":
                         listingPrice = Utils.ExtractUintFromText(listingDiv.TextContent);
@@ -78,6 +82,11 @@ internal sealed class Bazos
                         break;
                 }
 
+            if (skipCycle)
+            {
+                continue;
+            }
+            
             var listingId = uint.Parse(listingLink.Split('/')[4]);
             var listingDateParts = listingDateString.Split('.');
             var listingDate = new DateOnly(int.Parse(listingDateParts[2]), int.Parse(listingDateParts[1]),
