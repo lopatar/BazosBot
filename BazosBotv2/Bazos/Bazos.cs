@@ -54,6 +54,9 @@ internal sealed class Bazos
             foreach (var listingDiv in listing.Children)
                 switch (listingDiv.GetAttribute("class"))
                 {
+                    case "hodnocenitext":
+                        skipCycle = true;
+                        continue;
                     case "inzeratynadpis":
                         var linkElement = listingDiv.Children[0];
                         var imgElement = linkElement.Children[0];
