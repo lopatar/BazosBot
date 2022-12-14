@@ -186,7 +186,10 @@ internal sealed class BazosListing
             list.Add(imgLink);
         }
 
-        list.RemoveAt(0); //Removing first image, as the second one is a duplicate
+        if (list.Count > 1)
+        {
+            list.RemoveAt(0); //If there is more than 1 image, we remove the first one, as it's a duplicate of the 2nd
+        }
 
         Utils.Print($"Got {list.Count} image links for listing: {Name}", location: _config.BazosLocation);
         return list;
