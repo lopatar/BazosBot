@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <PackageReference Include="AngleSharp" Version="0.17.1" />
-        <PackageReference Include="DateOnlyMath" Version="1.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
     </ItemGroup>
 
