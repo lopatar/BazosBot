@@ -35,4 +35,9 @@ internal sealed class AtLocationProvider : ILocationProvider
     {
         return new("https://bazos.at/");
     }
+
+    public int GetZipCodeLength()
+    {
+        return 4;
+    }
 }

@@ -16,12 +16,12 @@ internal sealed class BazosListing
     private readonly uint _id;
     private readonly List<string> _imagesList;
     private readonly ILocationProvider _locationProvider;
-    private readonly uint _postalCode;
+    private readonly string _postalCode;
     private readonly uint _price;
     private readonly Uri _sectionLink;
     public readonly string Name;
 
-    public BazosListing(uint id, string name, Uri link, uint price, uint postalCode, uint ageDays,
+    public BazosListing(uint id, string name, Uri link, uint price, string postalCode, uint ageDays,
         IHtmlParser htmlParser,
         ILocationProvider locationProvider, Config config, CategoryScraper categoryScraper)
     {
@@ -69,7 +69,7 @@ internal sealed class BazosListing
             new KeyValuePair<string, string>("idad", _id.ToString())
         });
 
-        Utils.Print($"Deleting listing: {Name} from {_locationProvider.GetUri()}", location: _config.BazosLocation);
+        Utils.Print($"Deleting listing: {Name} from {_sectionLink}", location: _config.BazosLocation);
         httpClient.Post(deleteUri, httpContent);
     }
 
@@ -85,7 +85,7 @@ internal sealed class BazosListing
             new("popis", _description),
             new("cena", _price.ToString()),
             new("cenavyber", "1"),
-            new("lokalita", _postalCode.ToString()),
+            new("lokalita", _postalCode),
             new("jmeno", _config.UserName),
             new("telefoni", _config.UserPhoneNum.ToString()),
             new("maili", _config.UserEmail),

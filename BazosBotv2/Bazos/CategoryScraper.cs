@@ -53,24 +53,31 @@ internal sealed class CategoryScraper
 
         foreach (var sectionName in _sectionCategoryIds.Keys)
         {
-            var uri = new Uri(
-                $"https://{sectionName}.{_locationProvider.GetUri().Host}/{_locationProvider.GetAddListingPath()}");
-            using var httpClient = new BazosHttp(_locationProvider, _config);
-            using var htmlDocument = _htmlParser.ParseDocument(httpClient.Get(uri));
-            var categoryElement = htmlDocument.GetElementById("category");
-
-            for (var i = 1;
-                 i < categoryElement.Children.Length;
-                 i++) //starting from 1, because the first category is "Select category"
+            try
             {
-                var categoryOption = categoryElement.Children[i];
-                var categoryName = categoryOption.TextContent;
-                var categoryId = uint.Parse(categoryOption.GetAttribute("value") ?? "0");
+                var uri = new Uri(
+                    $"https://{sectionName}.{_locationProvider.GetUri().Host}/{_locationProvider.GetAddListingPath()}");
+                using var httpClient = new BazosHttp(_locationProvider, _config);
+                using var htmlDocument = _htmlParser.ParseDocument(httpClient.Get(uri));
+                var categoryElement = htmlDocument.GetElementById("category");
 
-                _sectionCategoryIds[sectionName].Add(categoryName, categoryId);
+                for (var i = 1;
+                     i < categoryElement.Children.Length;
+                     i++) //starting from 1, because the first category is "Select category"
+                {
+                    var categoryOption = categoryElement.Children[i];
+                    var categoryName = categoryOption.TextContent;
+                    var categoryId = uint.Parse(categoryOption.GetAttribute("value") ?? "0");
+
+                    _sectionCategoryIds[sectionName].Add(categoryName, categoryId);
+                }
+
+                categoryCount += _sectionCategoryIds[sectionName].Count;
             }
-
-            categoryCount += _sectionCategoryIds[sectionName].Count;
+            catch
+            {
+                Utils.Exit($"Could not access section: {sectionName} categories! Please check that your Config.json contains the valid values!", true, _config.BazosLocation);
+            }
         }
 
         Utils.Print($"Scraped {categoryCount} categories in {_sectionCategoryIds.Count} sections!",

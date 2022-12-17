@@ -46,8 +46,8 @@ internal sealed class Bazos
 
         foreach (var listing in listingElements)
         {
-            string listingName = "", listingLink = "", listingDateString = "";
-            uint listingPrice = 0, listingPostalCode = 0;
+            string listingName = "", listingLink = "", listingDateString = "", listingPostalCode = "";
+            uint listingPrice = 0;
 
             var skipCycle = false;
             
@@ -78,10 +78,10 @@ internal sealed class Bazos
                         listingLink = linkElement.GetAttribute("href") ?? "";
                         break;
                     case "inzeratycena":
-                        listingPrice = Utils.ExtractUintFromText(listingDiv.TextContent);
+                        listingPrice = Utils.ExtractUintFromString(listingDiv.TextContent);
                         break;
                     case "inzeratylok":
-                        listingPostalCode = Utils.ExtractUintFromText(listingDiv.TextContent);
+                        listingPostalCode = Utils.ExtractZipCodeFromLocation(listingDiv.TextContent, _locationProvider);
                         break;
                 }
 

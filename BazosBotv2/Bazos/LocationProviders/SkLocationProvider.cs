@@ -35,4 +35,9 @@ internal sealed class SkLocationProvider : ILocationProvider
     {
         return new("https://bazos.sk/");
     }
+    
+    public int GetZipCodeLength()
+    {
+        return 6;
+    }
 }

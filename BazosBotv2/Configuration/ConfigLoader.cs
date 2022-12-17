@@ -6,7 +6,7 @@ namespace BazosBotv2.Configuration;
 internal static class ConfigLoader
 {
     private const string FilesDirectory = "Files/";
-    public const string ConfigFile = $"{FilesDirectory}Config.json";
+    private const string ConfigFile = $"{FilesDirectory}Config.json";
     public const string ListingDirectory = $"{FilesDirectory}ListingImages/";
 
     private static readonly List<string> BazosTypes = new()

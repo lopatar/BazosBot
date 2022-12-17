@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using AngleSharp.Text;
+using BazosBotv2.Interfaces;
 
 namespace BazosBotv2.Utilities;
 
@@ -35,8 +37,14 @@ internal static class Utils
         File.WriteAllBytes(filePath, imageBytes);
     }
 
-    public static uint ExtractUintFromText(string text)
+    public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider)
     {
-        return uint.Parse(new(text.Where(char.IsDigit).ToArray()));
+        return listingLocationInfo.Substring(listingLocationInfo.Length - locationProvider.GetZipCodeLength())
+            .Replace(" ", "");
+    }
+
+    public static uint ExtractUintFromString(string text)
+    {
+        return uint.Parse(text.Where(char.IsDigit).ToArray());
     }
 }
