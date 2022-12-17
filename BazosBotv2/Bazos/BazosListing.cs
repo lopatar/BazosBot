@@ -197,6 +197,6 @@ internal sealed class BazosListing
 
     private string GetImagesPath()
     {
-        return $"{ConfigLoader.ListingDirectory}{Name.Replace(" ", "-")}/";
+        return $"{ConfigLoader.ListingDirectory}{Name.Replace(" ", "-").Replace("|", "")}/";
     }
 }
