@@ -67,7 +67,7 @@ internal sealed class BazosHttp : IDisposable
 
     private Cookie BuildCookie(string name, string value)
     {
-        return new(name, value, "/", $"{_locationProvider.GetUri().Host}");
+        return new(name, value, "/", $".{_locationProvider.GetUri().Host}");
     }
 
     private Uri BuildUri(string fileName)
