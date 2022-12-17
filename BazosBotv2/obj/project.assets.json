@@ -19,6 +19,15 @@
           }
         }
       },
+      "DateOnlyMath/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/DateOnlyMath.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/DateOnlyMath.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.2-beta2": {
         "type": "package",
         "compile": {
@@ -101,6 +110,18 @@
         "lib/netstandard2.0/AngleSharp.dll",
         "lib/netstandard2.0/AngleSharp.xml",
         "logo.png"
+      ]
+    },
+    "DateOnlyMath/1.0.0": {
+      "sha512": "P43QxaQ/kXErVVNZ1Kvh/PQFjT+32Sn+ZPSySO6vUAmhUUkbR16MuZ4tN0KM+DJAlKX7k5uv/PaviSwBeSeWWg==",
+      "type": "package",
+      "path": "dateonlymath/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dateonlymath.1.0.0.nupkg.sha512",
+        "dateonlymath.nuspec",
+        "lib/net6.0/DateOnlyMath.dll"
       ]
     },
     "Newtonsoft.Json/13.0.2-beta2": {
@@ -232,6 +253,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "AngleSharp >= 0.17.1",
+      "DateOnlyMath >= 1.0.0",
       "Newtonsoft.Json >= 13.0.2-beta2"
     ]
   },
@@ -275,6 +297,10 @@
           "AngleSharp": {
             "target": "Package",
             "version": "[0.17.1, )"
+          },
+          "DateOnlyMath": {
+            "target": "Package",
+            "version": "[1.0.0, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",

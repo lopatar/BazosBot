@@ -3,6 +3,7 @@ using BazosBotv2.Bazos.LocationProviders;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
+using DateOnlyMath;
 
 namespace BazosBotv2.Bazos;
 
@@ -95,8 +96,10 @@ internal sealed class Bazos
             var listingDate = new DateOnly(int.Parse(listingDateParts[2]), int.Parse(listingDateParts[1]),
                 int.Parse(listingDateParts[0]));
 
-            var listingAge = (uint)(dateOnlyNow.DayNumber - listingDate.DayNumber);
-
+            dateOnlyNow.Subtract(listingDate);
+            
+            var listingAge = (uint)dateOnlyNow.DayNumber;
+            
             _listings.Add(new(listingId, listingName, new(listingLink), listingPrice, listingPostalCode,
                 listingAge, _htmlParser, _locationProvider, _config, _categoryScraper));
         }
