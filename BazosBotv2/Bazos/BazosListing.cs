@@ -104,7 +104,7 @@ internal sealed class BazosListing
 
     private List<string> UploadImagesToBazos()
     {
-        var imagesDirectory = GetImagesPath();
+        var imagesDirectory = GetListingPath();
         var bazosImgNames = new List<string>();
 
         for (var i = 0; i < _imagesList.Count; i++)
@@ -137,7 +137,7 @@ internal sealed class BazosListing
         for (var i = 0; i < _imagesList.Count; i++)
         {
             var imageLink = _imagesList[i];
-            var imagePath = $"{GetImagesPath()}{i}.jpg";
+            var imagePath = $"{GetListingPath()}{i}.jpg";
 
             Utils.Print($"Downloading image: {imagePath} for listing: {Name}", location: _config.BazosLocation);
             Utils.DownloadImage(new(imageLink), imagePath);
@@ -146,7 +146,7 @@ internal sealed class BazosListing
 
     private void InitImageDirectory()
     {
-        var directoryPath = GetImagesPath();
+        var directoryPath = GetListingPath();
 
         if (Directory.Exists(directoryPath))
         {
@@ -195,8 +195,8 @@ internal sealed class BazosListing
         return list;
     }
 
-    private string GetImagesPath()
+    private string GetListingPath()
     {
-        return $"{ConfigLoader.ListingDirectory}{Name.Replace(" ", "-").Replace("|", "")}/";
+        return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
     }
 }
