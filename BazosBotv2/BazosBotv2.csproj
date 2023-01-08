@@ -12,4 +12,8 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Bazos\ListingRestorer" />
+    </ItemGroup>
+
 </Project>

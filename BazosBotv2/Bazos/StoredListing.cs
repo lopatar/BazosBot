@@ -1,10 +1,9 @@
 using BazosBotv2.Configuration;
-using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 
-namespace BazosBotv2.Bazos.ListingRestorer;
+namespace BazosBotv2.Bazos;
 
-internal struct StoredListing
+internal readonly struct StoredListing
 {
     public readonly uint CategoryId;
     public readonly string Description;

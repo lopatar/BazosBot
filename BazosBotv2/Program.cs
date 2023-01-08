@@ -22,6 +22,11 @@ foreach (var enabledConfig in enabledConfigs)
             Utils.Print($"Trying to renew listing: {listing.Name}", location: enabledConfig.BazosLocation);
             listing.Renew();
         }
+
+        if (enabledConfig.EnableRestorer)
+        {
+            bazos.RestoreListings();
+        }
     }
     catch (Exception ex)
     {

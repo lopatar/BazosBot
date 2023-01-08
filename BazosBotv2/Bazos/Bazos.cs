@@ -3,6 +3,7 @@ using BazosBotv2.Bazos.LocationProviders;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
+using Newtonsoft.Json;
 
 namespace BazosBotv2.Bazos;
 
@@ -12,6 +13,7 @@ internal sealed class Bazos
     private readonly Config _config;
     private readonly HtmlParser _htmlParser = new();
     private readonly List<BazosListing> _listings = new();
+    private readonly List<StoredListing> _storedListings = new();
     private readonly ILocationProvider _locationProvider;
 
     public Bazos(Config config)
@@ -32,11 +34,38 @@ internal sealed class Bazos
         InitListings();
     }
 
-    public bool ListingUrlExists(Uri url)
+    public uint GetListingCount()
+    {
+        return (uint)_listings.Count;
+    }
+    
+    private bool ListingUrlExists(Uri url)
     {
         return _listings.Any(listing => listing.Link == url);
     }
 
+    public void RestoreListings()
+    {
+        Utils.Print("Restorer enabled! Loading stored listings!", location: _config.BazosLocation);
+
+        var path = $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/";
+        var directories = Directory.EnumerateDirectories(path);
+
+        foreach (var directoryPath in directories)
+        {
+            var dataJsonPath = $"{directoryPath}/Data.json";
+            var json = File.ReadAllText(dataJsonPath);
+            var storedListing = JsonConvert.DeserializeObject<StoredListing>(json);
+
+            if (!ListingUrlExists(storedListing.Link))
+            {
+                _storedListings.Add(storedListing);
+            }
+        }
+        
+        Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted!", location: _config.BazosLocation);
+    }
+    
     public List<BazosListing> GetDueListings()
     {
         return _listings.Where(listing => listing.IsDueForRenewal()).ToList();

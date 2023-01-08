@@ -7,7 +7,7 @@ internal static class ConfigLoader
 {
     private const string FilesDirectory = "Files/";
     private const string ConfigFile = $"{FilesDirectory}Config.json";
-    public const string ListingDirectory = $"{FilesDirectory}ListingImages/";
+    public const string ListingDirectory = $"{FilesDirectory}Listings/";
 
     private static readonly List<string> BazosTypes = new()
     {
@@ -58,7 +58,7 @@ internal static class ConfigLoader
         foreach (var bazosType in BazosTypes)
         {
             var config = new Config(bazosType, false, "First Last", "Password", "test@example.com", 606606606, 88888888,
-                "XYXYXYXYXY", 2, true);
+                "XYXYXYXYXY", 2, true, true);
 
             Utils.Print($"Creating config for {nameof(config.BazosLocation)}: {bazosType}");
             dummyConfigs.Add(config);
