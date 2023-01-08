@@ -2,7 +2,7 @@
 using BazosBotv2.Configuration;
 using BazosBotv2.Utilities;
 
-Utils.Print("Welcome to BazosBot v0.2");
+Utils.Print("Welcome to BazosBot v1.1");
 ConfigLoader.LoadConfigs();
 
 var enabledConfigs = ConfigLoader.GetEnabledConfigs();
