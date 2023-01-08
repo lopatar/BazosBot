@@ -66,6 +66,9 @@ internal sealed class Bazos
         Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!", location: _config.BazosLocation);
         Console.ReadKey();
 
+        //If restored atleast 1 listing
+        var restoredListing = false;
+        
         foreach (var deletedListing in _storedListings)
         {
             Utils.Print($"Do you want to restore listing: {deletedListing.Name}? [Y/y = yes, other = no]: ", location: _config.BazosLocation, newLine: false);
@@ -77,9 +80,16 @@ internal sealed class Bazos
                 Utils.Print($"Skipping restoring deleted listing: {deletedListing.Name}", location: _config.BazosLocation);
                 continue;
             }
+
+            deletedListing.RestoreListing(_locationProvider, _config);
             
-            
+            restoredListing = true;
         }
+
+        if (!restoredListing) return;
+        
+        Utils.Print("At least 1 listing has been restored, going to re-fetch the listings!", location: _config.BazosLocation);
+        InitListings();
     }
     
     public List<BazosListing> GetDueListings()

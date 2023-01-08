@@ -116,7 +116,7 @@ internal sealed class BazosListing
         {
             var imgPath = $"{imagesDirectory}{i}.jpg";
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = UploadImage(imgBytes, $"{i}.jpg");
+            var bazosImgName = Utils.UploadImage(imgBytes, $"{i}.jpg", _locationProvider, _config, _sectionLink);
 
             Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
                 location: _config.BazosLocation);
@@ -125,16 +125,7 @@ internal sealed class BazosListing
 
         return bazosImgNames;
     }
-
-    private string UploadImage(byte[] imgData, string imgName)
-    {
-        using var httpClient = new BazosHttp(_locationProvider, _config);
-        using var requestContent = new MultipartFormDataContent("----WebKitFormBoundaryXXXXXXXXXXXXXXXX");
-        requestContent.Add(new StreamContent(new MemoryStream(imgData)), "file[0]", imgName);
-        var httpResponse = httpClient.Post(new Uri(_sectionLink + "upload.php"), requestContent);
-        return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
-    }
-
+    
     private void DownloadBazosImages()
     {
         for (var i = 0; i < _imagesList.Count; i++)

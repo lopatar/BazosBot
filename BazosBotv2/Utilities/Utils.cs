@@ -1,6 +1,9 @@
 using System.Diagnostics;
 using AngleSharp.Text;
+using BazosBotv2.Bazos;
+using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
+using Newtonsoft.Json;
 
 namespace BazosBotv2.Utilities;
 
@@ -24,6 +27,15 @@ internal static class Utils
         if (error) Console.ForegroundColor = ConsoleColor.White;
     }
 
+    public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config, Uri sectionLink)
+    {
+        using var httpClient = new BazosHttp(locationProvider, config);
+        using var requestContent = new MultipartFormDataContent("----WebKitFormBoundaryXXXXXXXXXXXXXXXX");
+        requestContent.Add(new StreamContent(new MemoryStream(imgData)), "file[0]", imgName);
+        var httpResponse = httpClient.Post(new Uri(sectionLink + "upload.php"), requestContent);
+        return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
+    }
+    
     public static void Exit(string message = "", bool error = false, string location = "")
     {
         if (!error) Console.ForegroundColor = ConsoleColor.Yellow;
