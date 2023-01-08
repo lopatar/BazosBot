@@ -7,33 +7,33 @@ namespace BazosBotv2.Bazos;
 
 internal readonly struct StoredListing
 {
-    private readonly uint _categoryId;
-    private readonly string _description;
+    public readonly uint CategoryId;
+    public readonly string Description;
     public readonly Uri Link;
-    private readonly Uri _sectionLink;
-    private readonly string _postalCode;
-    private readonly uint _price;
+    public readonly Uri SectionLink;
+    public readonly string PostalCode;
+    public readonly uint Price;
     public readonly string Name;
-    private readonly string _bazosLocation;
-    private readonly uint _imagesCount;
+    public readonly string BazosLocation;
+    public readonly uint ImagesCount;
     
     public StoredListing(uint categoryId, string description, Uri link, Uri sectionLink, string postalCode,
         uint price, string name, string bazosLocation, uint imagesCount)
     {
-        _categoryId = categoryId;
-        _description = description;
+        CategoryId = categoryId;
+        Description = description;
         Link = link;
-        _sectionLink = sectionLink;
-        _postalCode = postalCode;
-        _price = price;
+        SectionLink = sectionLink;
+        PostalCode = postalCode;
+        Price = price;
         Name = name;
-        _bazosLocation = bazosLocation;
-        _imagesCount = imagesCount;
+        BazosLocation = bazosLocation;
+        ImagesCount = imagesCount;
     }
     
     private string GetListingPath()
     {
-        return $"{ConfigLoader.ListingDirectory}{_bazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
+        return $"{ConfigLoader.ListingDirectory}{BazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
     }
 
     public void RestoreListing(ILocationProvider locationProvider, Config config)
@@ -43,12 +43,12 @@ internal readonly struct StoredListing
 
         var postContentPairs = new List<KeyValuePair<string, string>>
         {
-            new("category", _categoryId.ToString()),
+            new("category", CategoryId.ToString()),
             new("nadpis", Name),
-            new("popis", _description),
-            new("cena", _price.ToString()),
+            new("popis", Description),
+            new("cena", Price.ToString()),
             new("cenavyber", "1"),
-            new("lokalita", _postalCode),
+            new("lokalita", PostalCode),
             new("jmeno", config.UserName),
             new("telefoni", config.UserPhoneNum.ToString()),
             new("maili", config.UserEmail),
@@ -61,7 +61,7 @@ internal readonly struct StoredListing
             new KeyValuePair<string, string>("files[]", uploadedImage)));
         using var httpContent = new FormUrlEncodedContent(postContentPairs);
         using var httpClient = new BazosHttp(locationProvider, config);
-        httpClient.Post(new Uri(_sectionLink + "insert.php"), httpContent);
+        httpClient.Post(new Uri(SectionLink + "insert.php"), httpContent);
         Utils.Print($"Re-created listing: {Name}!!", location: config.BazosLocation);
     }
 
@@ -70,11 +70,11 @@ internal readonly struct StoredListing
         var imagesDirectory = GetListingPath();
         var bazosImgNames = new List<string>();
 
-        for (var i = 0; i < _imagesCount; i++)
+        for (var i = 0; i < ImagesCount; i++)
         {
             var imgPath = $"{imagesDirectory}{i}.jpg";
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = Utils.UploadImage(imgBytes, $"{i}.jpg", locationProvider, config, _sectionLink);
+            var bazosImgName = Utils.UploadImage(imgBytes, $"{i}.jpg", locationProvider, config, SectionLink);
 
             Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
                 location: config.BazosLocation);
@@ -89,7 +89,7 @@ internal readonly struct StoredListing
         var json = JsonConvert.SerializeObject(this, Formatting.Indented);
         var path = $"{GetListingPath()}Data.json";
         
-        Utilities.Utils.Print($"Saving listing: {Name} data to {path}", location: _bazosLocation);
+        Utilities.Utils.Print($"Saving listing: {Name} data to {path}", location: BazosLocation);
         File.WriteAllText(path, json);
     }
 }

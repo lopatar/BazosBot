@@ -66,7 +66,7 @@ internal sealed class Bazos
         Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!", location: _config.BazosLocation);
         Console.ReadKey();
 
-        //If restored atleast 1 listing
+        //If restored at least 1 listing
         var restoredListing = false;
         
         foreach (var deletedListing in _storedListings)
@@ -75,7 +75,7 @@ internal sealed class Bazos
             var input = Console.ReadLine()?.ToUpper();
 
             // ReSharper disable once InvertIf
-            if (input != "y")
+            if (input != "Y")
             {
                 Utils.Print($"Skipping restoring deleted listing: {deletedListing.Name}", location: _config.BazosLocation);
                 continue;
