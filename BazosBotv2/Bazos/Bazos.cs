@@ -32,6 +32,11 @@ internal sealed class Bazos
         InitListings();
     }
 
+    public bool ListingUrlExists(Uri url)
+    {
+        return _listings.Any(listing => listing.Link == url);
+    }
+
     public List<BazosListing> GetDueListings()
     {
         return _listings.Where(listing => listing.IsDueForRenewal()).ToList();

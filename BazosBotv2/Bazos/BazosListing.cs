@@ -48,12 +48,13 @@ internal sealed class BazosListing
 
         _imagesList = InitImages(htmlDocument);
         
+        InitListingDirectory();
+        DownloadBazosImages();
         ToStoredListing(link).Save();
     }
 
     public void Renew()
     {
-        DownloadBazosImages();
         DeleteFromBazos();
         CreateListing();
     }
@@ -137,8 +138,6 @@ internal sealed class BazosListing
 
     private void DownloadBazosImages()
     {
-        InitImageDirectory();
-
         for (var i = 0; i < _imagesList.Count; i++)
         {
             var imageLink = _imagesList[i];
@@ -149,7 +148,7 @@ internal sealed class BazosListing
         }
     }
 
-    private void InitImageDirectory()
+    private void InitListingDirectory()
     {
         var directoryPath = GetListingPath();
 
