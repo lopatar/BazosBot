@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
+using BazosBotv2.Bazos.ListingRestorer;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
@@ -20,6 +21,7 @@ internal sealed class BazosListing
     private readonly uint _price;
     private readonly Uri _sectionLink;
     public readonly string Name;
+    public readonly Uri Link;
 
     public BazosListing(uint id, string name, Uri link, uint price, string postalCode, uint ageDays,
         IHtmlParser htmlParser,
@@ -27,6 +29,7 @@ internal sealed class BazosListing
     {
         _id = id;
         Name = name;
+        Link = link;
         _sectionLink = new($"https://{link.Host}/");
         _price = price;
         _ageDays = ageDays;
@@ -44,6 +47,8 @@ internal sealed class BazosListing
         _categoryId = categoryScraper.GetCategoryId(sectionName, categoryName);
 
         _imagesList = InitImages(htmlDocument);
+        
+        ToStoredListing(link).Save();
     }
 
     public void Renew()
@@ -198,5 +203,10 @@ internal sealed class BazosListing
     private string GetListingPath()
     {
         return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
+    }
+
+    private StoredListing ToStoredListing(Uri link)
+    {
+        return new(_categoryId, _description, _id, link, _sectionLink, _postalCode, _price, Name, _config.BazosLocation, (uint)_imagesList.Count);
     }
 }
