@@ -206,6 +206,6 @@ internal sealed class BazosListing
 
     private StoredListing ToStoredListing(Uri link)
     {
-        return new(_categoryId, _description, _id, link, _sectionLink, _postalCode, _price, Name, _config.BazosLocation, (uint)_imagesList.Count);
+        return new(_categoryId, _description, link, _sectionLink, _postalCode, _price, Name, _config.BazosLocation, (uint)_imagesList.Count);
     }
 }

@@ -1,4 +1,5 @@
 using BazosBotv2.Configuration;
+using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json;
 
 namespace BazosBotv2.Bazos.ListingRestorer;
@@ -7,7 +8,6 @@ internal struct StoredListing
 {
     public readonly uint CategoryId;
     public readonly string Description;
-    public readonly uint Id;
     public readonly Uri Link;
     public readonly Uri SectionLink;
     public readonly string PostalCode;
@@ -16,12 +16,11 @@ internal struct StoredListing
     public readonly string BazosLocation;
     public readonly uint ImagesCount;
     
-    public StoredListing(uint categoryId, string description, uint id, Uri link, Uri sectionLink, string postalCode,
+    public StoredListing(uint categoryId, string description, Uri link, Uri sectionLink, string postalCode,
         uint price, string name, string bazosLocation, uint imagesCount)
     {
         CategoryId = categoryId;
         Description = description;
-        Id = id;
         Link = link;
         SectionLink = sectionLink;
         PostalCode = postalCode;
@@ -38,7 +37,10 @@ internal struct StoredListing
 
     public void Save()
     {
-        var json = JsonConvert.SerializeObject(this);
-        File.WriteAllText($"{GetListingPath()}/Data.json", json);
+        var json = JsonConvert.SerializeObject(this, Formatting.Indented);
+        var path = $"{GetListingPath()}Data.json";
+        
+        Utilities.Utils.Print($"Saving listing: {Name} data to {path}", location: BazosLocation);
+        File.WriteAllText(path, json);
     }
 }
