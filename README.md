@@ -3,12 +3,15 @@
 Bot for the marketplace portal Bazoš, it operates in several countries in central Europe.
 
 # Links
-- [Bazoš.cz](https://bazos.cz)
-- [Bazoš.sk](https://bazos.sk)
+- [Bazos.cz](https://bazos.cz)
+- [Bazos.sk](https://bazos.sk)
 - [Bazos.pl](https://bazos.pl)
 - [Bazos.at](https://bazos.at)
 
 **The bot supports all above mentioned locations!**
+
+# Listing restorer
+With each run the bot saves all available listings locally. Sometimes Bazos can hard-delete your listings, making them impossible to recover easily (only manually). By enabling restorer in the configuration file, the bot checks for deleted listings and asks you if you want to restore particular listings.
 
 # Intent
 
