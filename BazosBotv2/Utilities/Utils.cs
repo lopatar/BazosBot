@@ -6,13 +6,20 @@ namespace BazosBotv2.Utilities;
 
 internal static class Utils
 {
-    public static void Print(string message, bool error = false, string location = "")
+    public static void Print(string message, bool error = false, string location = "", bool newLine = true)
     {
         if (error) Console.ForegroundColor = ConsoleColor.Red;
 
         message = location == "" ? $"[BazosBot] {message}" : $"[BazosBot] [{location.ToUpper()}] {message}";
 
-        Console.WriteLine(message);
+        if (newLine)
+        {
+            Console.WriteLine(message);
+        }
+        else
+        {
+            Console.Write(message);
+        }
 
         if (error) Console.ForegroundColor = ConsoleColor.White;
     }

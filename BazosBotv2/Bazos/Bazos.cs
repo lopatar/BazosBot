@@ -63,7 +63,23 @@ internal sealed class Bazos
             }
         }
         
-        Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted!", location: _config.BazosLocation);
+        Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!", location: _config.BazosLocation);
+        Console.ReadKey();
+
+        foreach (var deletedListing in _storedListings)
+        {
+            Utils.Print($"Do you want to restore listing: {deletedListing.Name}? [Y/y = yes, other = no]: ", location: _config.BazosLocation, newLine: false);
+            var input = Console.ReadLine()?.ToUpper();
+
+            // ReSharper disable once InvertIf
+            if (input != "y")
+            {
+                Utils.Print($"Skipping restoring deleted listing: {deletedListing.Name}", location: _config.BazosLocation);
+                continue;
+            }
+            
+            
+        }
     }
     
     public List<BazosListing> GetDueListings()
