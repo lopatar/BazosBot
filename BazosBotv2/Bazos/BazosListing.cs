@@ -191,7 +191,8 @@ internal sealed class BazosListing
 
     private string GetListingPath()
     {
-        return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
+        var dirName = Path.GetInvalidPathChars().Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
+        return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{dirName}/";
     }
 
     private StoredListing ToStoredListing(Uri link)

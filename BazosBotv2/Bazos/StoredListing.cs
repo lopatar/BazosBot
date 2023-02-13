@@ -33,7 +33,8 @@ internal readonly struct StoredListing
     
     private string GetListingPath()
     {
-        return $"{ConfigLoader.ListingDirectory}{BazosLocation}/{Name.Replace(" ", "-").Replace("|", "")}/";
+        var dirName = Path.GetInvalidPathChars().Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
+        return $"{ConfigLoader.ListingDirectory}{BazosLocation}/{dirName}/";
     }
 
     public void RestoreListing(ILocationProvider locationProvider, Config config)
