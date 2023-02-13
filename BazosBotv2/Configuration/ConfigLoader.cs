@@ -24,15 +24,17 @@ internal static class ConfigLoader
         if (!File.Exists(ConfigFile))
         {
             CreateDummyConfigs();
-            Utils.Exit(
-                $"Created initial {ConfigFile} file, edit it!"); //could use recursion here to re-load the config after user input, but meh.
+            Utils.Print($"Created initial config file {ConfigFile}, please edit it. Press any key to continue!");
+            Console.ReadKey();
+            
+            LoadConfigs(); //re-load the configs
         }
 
         var configJson = File.ReadAllText(ConfigFile);
 
         try
         {
-            _loadedConfigs = JsonConvert.DeserializeObject<List<Config>>(configJson) ?? new();
+            _loadedConfigs = JsonConvert.DeserializeObject<List<Config>>(configJson) ?? new List<Config>();
         }
         catch
         {
