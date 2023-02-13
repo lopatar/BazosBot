@@ -9,8 +9,8 @@ var enabledConfigs = ConfigLoader.GetEnabledConfigs();
 
 foreach (var enabledConfig in enabledConfigs) 
 {
-    //try
-    //{
+    try
+    {
         var bazos = new Bazos(enabledConfig);
         var dueListings = bazos.GetDueListings();
         Utils.Print($"Got {dueListings.Count} due listings! Press any key to continue...",
@@ -27,12 +27,12 @@ foreach (var enabledConfig in enabledConfigs)
         {
             bazos.RestoreListings();
         }
-    //}
-    //catch (Exception ex)
-    //{
-      //  Utils.Print("Unknown error occured!", true, enabledConfig.BazosLocation);
-       // Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}", true, enabledConfig.BazosLocation);
-    //}
+    }
+    catch (Exception ex)
+    {
+        Utils.Print("Unknown error occured!", true, enabledConfig.BazosLocation);
+        Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}", true, enabledConfig.BazosLocation);
+    }
 }
  
 Utils.Exit("Bot finished!");
