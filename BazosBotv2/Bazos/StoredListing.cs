@@ -37,6 +37,17 @@ internal readonly struct StoredListing
         return $"{ConfigLoader.ListingDirectory}{BazosLocation}/{dirName}/";
     }
 
+    public void AntiImageBan()
+    {
+        var listingPath = GetListingPath();
+
+        for (var i = 0; i < ImagesCount; i++)
+        {
+            var imgPath = $"{listingPath}{i}.jpg";
+            
+        }
+    }
+    
     public void RestoreListing(ILocationProvider locationProvider, Config config)
     {
         var bazosUploadedImages = UploadImagesToBazos(locationProvider, config);

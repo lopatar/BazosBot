@@ -66,6 +66,19 @@ internal sealed class Bazos
         Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!", location: _config.BazosLocation);
         Console.ReadKey();
 
+        var executeAntiBan = false;
+        
+        if (_storedListings.Count > 0)
+        {
+            Utils.Print("Do you want to execute anti image banning? [Y/y = yes, other = no]", location: _config.BazosLocation, newLine: false);
+            var input = Console.ReadLine()?.ToUpper();
+
+            if (input == "Y")
+            {
+                executeAntiBan = true;
+            }
+        }
+        
         //If restored at least 1 listing
         var restoredListing = false;
         
@@ -81,6 +94,11 @@ internal sealed class Bazos
                 continue;
             }
 
+            if (executeAntiBan)
+            {
+                deletedListing.AntiImageBan();
+            }
+            
             deletedListing.RestoreListing(_locationProvider, _config);
             
             restoredListing = true;
