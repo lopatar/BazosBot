@@ -7,8 +7,7 @@ ConfigLoader.LoadConfigs();
 
 var enabledConfigs = ConfigLoader.GetEnabledConfigs();
 
-foreach (var enabledConfig in enabledConfigs) 
-{
+foreach (var enabledConfig in enabledConfigs)
     try
     {
         var bazos = new Bazos(enabledConfig);
@@ -23,16 +22,12 @@ foreach (var enabledConfig in enabledConfigs)
             listing.Renew();
         }
 
-        if (enabledConfig.EnableRestorer)
-        {
-            bazos.RestoreListings();
-        }
+        if (enabledConfig.EnableRestorer) bazos.RestoreListings();
     }
     catch (Exception ex)
     {
         Utils.Print("Unknown error occured!", true, enabledConfig.BazosLocation);
         Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}", true, enabledConfig.BazosLocation);
     }
-}
- 
+
 Utils.Exit("Bot finished!");

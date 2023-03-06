@@ -26,7 +26,7 @@ internal static class ConfigLoader
             CreateDummyConfigs();
             Utils.Print($"Created initial config file {ConfigFile}, please edit it. Press any key to continue!");
             Console.ReadKey();
-            
+
             LoadConfigs(); //re-load the configs
         }
 

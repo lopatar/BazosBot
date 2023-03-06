@@ -13,10 +13,11 @@ internal struct Config
     public readonly uint ListingDaysUntilRenewal;
     public readonly bool SkipTopListings;
     public readonly bool EnableRestorer;
-    
+
     public Config(string bazosLocation, bool enabled, string userName, string userPassword, string userEmail,
         uint userPhoneNum,
-        uint userCookieBId, string userCookieBKod, uint listingDaysUntilRenewal, bool skipTopListings, bool enableRestorer)
+        uint userCookieBId, string userCookieBKod, uint listingDaysUntilRenewal, bool skipTopListings,
+        bool enableRestorer)
     {
         BazosLocation = bazosLocation;
         Enabled = enabled;

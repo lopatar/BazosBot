@@ -3,7 +3,6 @@ using AngleSharp.Html.Parser;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
-using Newtonsoft.Json;
 
 namespace BazosBotv2.Bazos;
 
@@ -19,8 +18,8 @@ internal sealed class BazosListing
     private readonly string _postalCode;
     private readonly uint _price;
     private readonly Uri _sectionLink;
-    public readonly string Name;
     public readonly Uri Link;
+    public readonly string Name;
 
     public BazosListing(uint id, string name, Uri link, uint price, string postalCode, uint ageDays,
         IHtmlParser htmlParser,
@@ -29,7 +28,7 @@ internal sealed class BazosListing
         _id = id;
         Name = name;
         Link = link;
-        _sectionLink = new($"https://{link.Host}/");
+        _sectionLink = new Uri($"https://{link.Host}/");
         _price = price;
         _ageDays = ageDays;
         _postalCode = postalCode;
@@ -46,7 +45,7 @@ internal sealed class BazosListing
         _categoryId = categoryScraper.GetCategoryId(sectionName, categoryName);
 
         _imagesList = InitImages(htmlDocument);
-        
+
         InitListingDirectory();
         DownloadBazosImages();
         ToStoredListing(link).Save();
@@ -125,7 +124,7 @@ internal sealed class BazosListing
 
         return bazosImgNames;
     }
-    
+
     private void DownloadBazosImages()
     {
         for (var i = 0; i < _imagesList.Count; i++)
@@ -134,7 +133,7 @@ internal sealed class BazosListing
             var imagePath = $"{GetListingPath()}{i}.jpg";
 
             Utils.Print($"Downloading image: {imagePath} for listing: {Name}", location: _config.BazosLocation);
-            Utils.DownloadImage(new(imageLink), imagePath);
+            Utils.DownloadImage(new Uri(imageLink), imagePath);
         }
     }
 
@@ -181,9 +180,7 @@ internal sealed class BazosListing
         }
 
         if (list.Count > 1)
-        {
             list.RemoveAt(0); //If there is more than 1 image, we remove the first one, as it's a duplicate of the 2nd
-        }
 
         Utils.Print($"Got {list.Count} image links for listing: {Name}", location: _config.BazosLocation);
         return list;
@@ -191,12 +188,15 @@ internal sealed class BazosListing
 
     private string GetListingPath()
     {
-        var dirName = Path.GetInvalidPathChars().Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
+        var dirName = Path.GetInvalidPathChars()
+            .Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
         return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{dirName}/";
     }
 
     private StoredListing ToStoredListing(Uri link)
     {
-        return new(_categoryId, _description, link, _sectionLink, _postalCode, _price, Name, _config.BazosLocation, (uint)_imagesList.Count);
+        return new StoredListing(_categoryId, _description, link, _sectionLink, _postalCode, _price, Name,
+            _config.BazosLocation,
+            (uint)_imagesList.Count);
     }
 }

@@ -33,7 +33,7 @@ internal sealed class AtLocationProvider : ILocationProvider
 
     public Uri GetUri()
     {
-        return new("https://bazos.at/");
+        return new Uri("https://bazos.at/");
     }
 
     public int GetZipCodeLength()

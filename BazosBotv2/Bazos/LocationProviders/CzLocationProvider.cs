@@ -33,9 +33,9 @@ internal sealed class CzLocationProvider : ILocationProvider
 
     public Uri GetUri()
     {
-        return new("https://bazos.cz/");
+        return new Uri("https://bazos.cz/");
     }
-    
+
     public int GetZipCodeLength()
     {
         return 6;

@@ -33,7 +33,7 @@ internal sealed class PlLocationProvider : ILocationProvider
 
     public Uri GetUri()
     {
-        return new("https://bazos.pl/");
+        return new Uri("https://bazos.pl/");
     }
 
     public int GetZipCodeLength()

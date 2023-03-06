@@ -14,7 +14,7 @@ internal sealed class BazosHttp : IDisposable
     {
         _locationProvider = locationProvider;
         _config = config;
-        _httpClient = new(new HttpClientHandler
+        _httpClient = new HttpClient(new HttpClientHandler
         {
             CookieContainer = InitCookieContainer()
         });
@@ -67,11 +67,11 @@ internal sealed class BazosHttp : IDisposable
 
     private Cookie BuildCookie(string name, string value)
     {
-        return new(name, value, "/", $".{_locationProvider.GetUri().Host}");
+        return new Cookie(name, value, "/", $".{_locationProvider.GetUri().Host}");
     }
 
     private Uri BuildUri(string fileName)
     {
-        return new(_locationProvider.GetUri() + fileName);
+        return new Uri(_locationProvider.GetUri() + fileName);
     }
 }

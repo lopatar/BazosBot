@@ -13,8 +13,8 @@ internal sealed class Bazos
     private readonly Config _config;
     private readonly HtmlParser _htmlParser = new();
     private readonly List<BazosListing> _listings = new();
-    private readonly List<StoredListing> _storedListings = new();
     private readonly ILocationProvider _locationProvider;
+    private readonly List<StoredListing> _storedListings = new();
 
     public Bazos(Config config)
     {
@@ -22,7 +22,7 @@ internal sealed class Bazos
         Utils.Print("Initializing BazosBot", location: _config.BazosLocation);
 
         _locationProvider = InitLocationProvider();
-        _categoryScraper = new(_locationProvider, _htmlParser, config);
+        _categoryScraper = new CategoryScraper(_locationProvider, _htmlParser, config);
 
         var validationField = InitValidationField();
         _locationProvider.SetInputValidationField(validationField);
@@ -38,7 +38,7 @@ internal sealed class Bazos
     {
         return (uint)_listings.Count;
     }
-    
+
     private bool ListingUrlExists(Uri url)
     {
         return _listings.Any(listing => listing.Link == url);
@@ -57,59 +57,63 @@ internal sealed class Bazos
             var json = File.ReadAllText(dataJsonPath);
             var storedListing = JsonConvert.DeserializeObject<StoredListing>(json);
 
-            if (!ListingUrlExists(storedListing.Link))
-            {
-                _storedListings.Add(storedListing);
-            }
+            if (!ListingUrlExists(storedListing.Link)) _storedListings.Add(storedListing);
         }
-        
-        Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!", location: _config.BazosLocation);
+
+        Utils.Print($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!",
+            location: _config.BazosLocation);
         Console.ReadKey();
 
         var executeAntiBan = false;
-        
+
         if (_storedListings.Count > 0)
         {
-            Utils.Print("Do you want to execute anti image banning? [Y/y = yes, other = no]", location: _config.BazosLocation, newLine: false);
+            Utils.Print("Do you want to execute anti image banning? [Y/y = yes, other = no]",
+                location: _config.BazosLocation, newLine: false);
             var input = Console.ReadLine()?.ToUpper();
 
             if (input == "Y")
             {
+                Utils.Print("Anti banning feature will be executed!", location: _config.BazosLocation);
                 executeAntiBan = true;
             }
         }
-        
+
         //If restored at least 1 listing
         var restoredListing = false;
-        
+
         foreach (var deletedListing in _storedListings)
         {
-            Utils.Print($"Do you want to restore listing: {deletedListing.Name}? [Y/y = yes, other = no]: ", location: _config.BazosLocation, newLine: false);
+            Utils.Print($"Do you want to restore listing: {deletedListing.Name}? [Y/y = yes, other = no]: ",
+                location: _config.BazosLocation, newLine: false);
             var input = Console.ReadLine()?.ToUpper();
 
             // ReSharper disable once InvertIf
             if (input != "Y")
             {
-                Utils.Print($"Skipping restoring deleted listing: {deletedListing.Name}", location: _config.BazosLocation);
+                Utils.Print($"Skipping restoring deleted listing: {deletedListing.Name}",
+                    location: _config.BazosLocation);
                 continue;
             }
 
             if (executeAntiBan)
             {
+                Utils.Print($"Executing anti ban feature for listing: {deletedListing.Name}!", location: _config.BazosLocation);
                 deletedListing.AntiImageBan();
             }
-            
+
             deletedListing.RestoreListing(_locationProvider, _config);
-            
+
             restoredListing = true;
         }
 
         if (!restoredListing) return;
-        
-        Utils.Print("At least 1 listing has been restored, going to re-fetch the listings!", location: _config.BazosLocation);
+
+        Utils.Print("At least 1 listing has been restored, going to re-fetch the listings!",
+            location: _config.BazosLocation);
         InitListings();
     }
-    
+
     public List<BazosListing> GetDueListings()
     {
         return _listings.Where(listing => listing.IsDueForRenewal()).ToList();
@@ -128,7 +132,7 @@ internal sealed class Bazos
             uint listingPrice = 0;
 
             var skipCycle = false;
-            
+
             foreach (var listingDiv in listing.Children)
                 switch (listingDiv.GetAttribute("class"))
                 {
@@ -142,16 +146,16 @@ internal sealed class Bazos
                         listingDateString = listingDiv.Children[2].TextContent.Replace(" ", "").Replace("-", "")
                             .Replace("[", "")
                             .Replace("]", "");
-                        
+
                         listingName = imgElement.GetAttribute("alt") ?? "";
-                        
+
                         if (listingDateString.Contains("TOP") && _config.SkipTopListings)
                         {
                             Utils.Print($"Skipping TOP listing: {listingName}", location: _config.BazosLocation);
                             skipCycle = true;
                             break;
                         }
-                        
+
                         listingDateString = listingDateString.Replace("TOP", "");
                         listingLink = linkElement.GetAttribute("href") ?? "";
                         break;
@@ -163,19 +167,17 @@ internal sealed class Bazos
                         break;
                 }
 
-            if (skipCycle)
-            {
-                continue;
-            }
-            
+            if (skipCycle) continue;
+
             var listingId = uint.Parse(listingLink.Split('/')[4]);
             var listingDateParts = listingDateString.Split('.');
             var listingDate = new DateOnly(int.Parse(listingDateParts[2]), int.Parse(listingDateParts[1]),
                 int.Parse(listingDateParts[0]));
-            
+
             var listingAge = (uint)(dateOnlyNow.DayNumber - listingDate.DayNumber);
-            
-            _listings.Add(new(listingId, listingName, new(listingLink), listingPrice, listingPostalCode,
+
+            _listings.Add(new BazosListing(listingId, listingName, new Uri(listingLink), listingPrice,
+                listingPostalCode,
                 listingAge, _htmlParser, _locationProvider, _config, _categoryScraper));
         }
 
@@ -205,8 +207,9 @@ internal sealed class Bazos
 
         foreach (var inputElement in addForm.GetElementsByTagName("INPUT"))
             if (inputElement.GetAttribute("type") == "hidden")
-                return new(inputElement.GetAttribute("name") ?? "", inputElement.GetAttribute("value") ?? "");
+                return new KeyValuePair<string, string>(inputElement.GetAttribute("name") ?? "",
+                    inputElement.GetAttribute("value") ?? "");
 
-        return new("", "");
+        return new KeyValuePair<string, string>("", "");
     }
 }

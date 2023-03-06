@@ -13,6 +13,8 @@ Bot for the marketplace portal Bazoš, it operates in several countries in centr
 # Listing restorer
 With each run the bot saves all available listings locally. Sometimes Bazos can hard-delete your listings, making them impossible to recover easily (only manually). By enabling restorer in the configuration file, the bot checks for deleted listings and asks you if you want to restore particular listings.
 
+- Bazoš started to ban listing restorer's saved images using their cryptographic fingerprint. **Before each run, the bot is going to ask you, whether to try and circumvent this obstacle. This means changing a random pixel within the size of the picture to white.** 
+
 # Intent
 
 Listings on Bazoš are sorted by the date of creation. The site allows you to put the listings to the top by paying. BazosBot bypasses this functionality by extracting the data from your listings, removing them and then adding them back.

@@ -43,7 +43,7 @@ internal sealed class CategoryScraper
              i++) //starting from 1, because the first section is "All sections"
         {
             var sectionName = sectionElement.Children[i].GetAttribute("value") ?? "";
-            _sectionCategoryIds.Add(sectionName, new());
+            _sectionCategoryIds.Add(sectionName, new Dictionary<string, uint>());
         }
     }
 
@@ -52,7 +52,6 @@ internal sealed class CategoryScraper
         var categoryCount = 0;
 
         foreach (var sectionName in _sectionCategoryIds.Keys)
-        {
             try
             {
                 var uri = new Uri(
@@ -76,9 +75,10 @@ internal sealed class CategoryScraper
             }
             catch
             {
-                Utils.Exit($"Could not access section: {sectionName} categories! Please check that your Config.json contains the valid values!", true, _config.BazosLocation);
+                Utils.Exit(
+                    $"Could not access section: {sectionName} categories! Please check that your Config.json contains the valid values!",
+                    true, _config.BazosLocation);
             }
-        }
 
         Utils.Print($"Scraped {categoryCount} categories in {_sectionCategoryIds.Count} sections!",
             location: _config.BazosLocation);

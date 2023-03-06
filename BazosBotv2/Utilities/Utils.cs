@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using AngleSharp.Text;
 using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
@@ -16,18 +15,15 @@ internal static class Utils
         message = location == "" ? $"[BazosBot] {message}" : $"[BazosBot] [{location.ToUpper()}] {message}";
 
         if (newLine)
-        {
             Console.WriteLine(message);
-        }
         else
-        {
             Console.Write(message);
-        }
 
         if (error) Console.ForegroundColor = ConsoleColor.White;
     }
 
-    public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config, Uri sectionLink)
+    public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config,
+        Uri sectionLink)
     {
         using var httpClient = new BazosHttp(locationProvider, config);
         using var requestContent = new MultipartFormDataContent("----WebKitFormBoundaryXXXXXXXXXXXXXXXX");
@@ -35,7 +31,7 @@ internal static class Utils
         var httpResponse = httpClient.Post(new Uri(sectionLink + "upload.php"), requestContent);
         return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
     }
-    
+
     public static void Exit(string message = "", bool error = false, string location = "")
     {
         if (!error) Console.ForegroundColor = ConsoleColor.Yellow;

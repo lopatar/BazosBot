@@ -33,9 +33,9 @@ internal sealed class SkLocationProvider : ILocationProvider
 
     public Uri GetUri()
     {
-        return new("https://bazos.sk/");
+        return new Uri("https://bazos.sk/");
     }
-    
+
     public int GetZipCodeLength()
     {
         return 6;

@@ -16,7 +16,7 @@ internal readonly struct StoredListing
     public readonly string Name;
     public readonly string BazosLocation;
     public readonly uint ImagesCount;
-    
+
     public StoredListing(uint categoryId, string description, Uri link, Uri sectionLink, string postalCode,
         uint price, string name, string bazosLocation, uint imagesCount)
     {
@@ -30,10 +30,11 @@ internal readonly struct StoredListing
         BazosLocation = bazosLocation;
         ImagesCount = imagesCount;
     }
-    
+
     private string GetListingPath()
     {
-        var dirName = Path.GetInvalidPathChars().Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
+        var dirName = Path.GetInvalidPathChars()
+            .Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
         return $"{ConfigLoader.ListingDirectory}{BazosLocation}/{dirName}/";
     }
 
@@ -41,13 +42,23 @@ internal readonly struct StoredListing
     {
         var listingPath = GetListingPath();
 
+        var randomGen = new Random();
+
         for (var i = 0; i < ImagesCount; i++)
         {
             var imgPath = $"{listingPath}{i}.jpg";
-            
+            using var image = Image.Load<Bgr24>(imgPath);
+
+            var randomX = randomGen.Next(0, image.Size.Height);
+            var randomY = randomGen.Next(0, image.Size.Width);
+
+            image[randomX, randomY] = new Bgr24(255, 255, 255);
+            image.SaveAsJpeg(imgPath);
         }
+        
+        Utils.Print($"Executed anti image ban feature for listing: {Name}, affected: {ImagesCount} images!", location: BazosLocation);
     }
-    
+
     public void RestoreListing(ILocationProvider locationProvider, Config config)
     {
         var bazosUploadedImages = UploadImagesToBazos(locationProvider, config);
@@ -95,13 +106,13 @@ internal readonly struct StoredListing
 
         return bazosImgNames;
     }
-    
+
     public void Save()
     {
         var json = JsonConvert.SerializeObject(this, Formatting.Indented);
         var path = $"{GetListingPath()}Data.json";
-        
-        Utilities.Utils.Print($"Saving listing: {Name} data to {path}", location: BazosLocation);
+
+        Utils.Print($"Saving listing: {Name} data to {path}", location: BazosLocation);
         File.WriteAllText(path, json);
     }
 }
