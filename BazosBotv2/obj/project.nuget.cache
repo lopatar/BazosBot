@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sZIGyhgEUtJNSh8+K4ZapRMr8gjVF+0xrRmd9UiTf4ntT2i6Ts/xeRmkVSTX0cyGxWZAwXNAaIr1CMl8MXhWBg==",
+  "dgSpecHash": "1qXPTQPVeklTlLpqgfS3QOQAburZNNx2hU/3PkrRJaP2mAufstw7bQR+U6YybW+Lv6zl17Ur8ZkpO8Vj3jVR9g==",
   "success": true,
   "projectFilePath": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
   "expectedPackageFiles": [
@@ -9,10 +9,7 @@
     "/home/user/.nuget/packages/sixlabors.imagesharp/3.0.0/sixlabors.imagesharp.3.0.0.nupkg.sha512",
     "/home/user/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
     "/home/user/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "/home/user/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
-    "/home/user/.nuget/packages/microsoft.netcore.app.ref/6.0.14/microsoft.netcore.app.ref.6.0.14.nupkg.sha512",
-    "/home/user/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.14/microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
-    "/home/user/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.14/microsoft.netcore.app.host.linux-x64.6.0.14.nupkg.sha512"
+    "/home/user/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

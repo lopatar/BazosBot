@@ -97,7 +97,7 @@ internal readonly struct StoredListing
         {
             var imgPath = $"{imagesDirectory}{i}.jpg";
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = Utils.UploadImage(imgBytes, $"{i}.jpg", locationProvider, config, SectionLink);
+            var bazosImgName = Utils.UploadImage(imgBytes, $"{Utils.RandomString(16)}.jpg", locationProvider, config, SectionLink);
 
             Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
                 location: config.BazosLocation);

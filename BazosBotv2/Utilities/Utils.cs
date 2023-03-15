@@ -26,7 +26,7 @@ internal static class Utils
         Uri sectionLink)
     {
         using var httpClient = new BazosHttp(locationProvider, config);
-        using var requestContent = new MultipartFormDataContent("----WebKitFormBoundaryXXXXXXXXXXXXXXXX");
+        using var requestContent = new MultipartFormDataContent("----WebKitFormBoundary" + RandomString(16u));
         requestContent.Add(new StreamContent(new MemoryStream(imgData)), "file[0]", imgName);
         var httpResponse = httpClient.Post(new Uri(sectionLink + "upload.php"), requestContent);
         return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
@@ -61,5 +61,19 @@ internal static class Utils
     public static uint ExtractUintFromString(string text)
     {
         return uint.Parse(text.Where(char.IsDigit).ToArray());
+    }
+
+    public static string RandomString(uint length)
+    {
+        const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+        var outputString = "";
+        var random = new Random();
+        
+        for (var i = 0; i < length; i++)
+        {
+            outputString += alphabet[random.Next(0, alphabet.Length)];
+        }
+
+        return outputString;
     }
 }

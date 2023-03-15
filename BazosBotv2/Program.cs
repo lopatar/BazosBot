@@ -2,12 +2,12 @@
 using BazosBotv2.Configuration;
 using BazosBotv2.Utilities;
 
-Utils.Print("Welcome to BazosBot v1.1");
+Utils.Print("Welcome to BazosBot v1.2");
 ConfigLoader.LoadConfigs();
 
 var enabledConfigs = ConfigLoader.GetEnabledConfigs();
 
-foreach (var enabledConfig in enabledConfigs)
+foreach (var enabledConfig in enabledConfigs)       
     try
     {
         var bazos = new Bazos(enabledConfig);
