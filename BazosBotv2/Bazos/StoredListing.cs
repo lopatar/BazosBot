@@ -49,8 +49,8 @@ internal readonly struct StoredListing
             var imgPath = $"{listingPath}{i}.jpg";
             using var image = Image.Load<Bgr24>(imgPath);
 
-            var randomX = randomGen.Next(0, image.Size.Height);
-            var randomY = randomGen.Next(0, image.Size.Width);
+            var randomX = randomGen.Next(0, image.Size.Width);
+            var randomY = randomGen.Next(0, image.Size.Height);
 
             image[randomX, randomY] = new Bgr24(255, 255, 255);
             image.SaveAsJpeg(imgPath);
