@@ -7,7 +7,7 @@ internal struct Config
     public readonly string UserName;
     public readonly string UserPassword;
     public readonly string UserEmail;
-    public readonly uint UserPhoneNum;
+    public readonly ulong UserPhoneNum;
     public readonly uint UserCookieBId;
     public readonly string UserCookieBKod;
     public readonly uint ListingDaysUntilRenewal;
@@ -15,7 +15,7 @@ internal struct Config
     public readonly bool EnableRestorer;
 
     public Config(string bazosLocation, bool enabled, string userName, string userPassword, string userEmail,
-        uint userPhoneNum,
+        ulong userPhoneNum,
         uint userCookieBId, string userCookieBKod, uint listingDaysUntilRenewal, bool skipTopListings,
         bool enableRestorer)
     {
