@@ -1,3 +1,5 @@
+# GITHUB RELEASE MIGHT BE OUT OF DATE, COMPILE FROM SOURCE!
+
 # BazosBot
 
 Bot for the marketplace portal Bazoš, it operates in several countries in central Europe.
