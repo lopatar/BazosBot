@@ -7,7 +7,7 @@ ConfigLoader.LoadConfigs();
 
 var enabledConfigs = ConfigLoader.GetEnabledConfigs();
 
-foreach (var enabledConfig in enabledConfigs)       
+foreach (var enabledConfig in enabledConfigs)
     try
     {
         var bazos = new Bazos(enabledConfig);

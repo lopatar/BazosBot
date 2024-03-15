@@ -1,4 +1,3 @@
-using AngleSharp.Html.Parser;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
@@ -61,7 +60,7 @@ internal sealed class CategoryScraper
                 var categoryElement = htmlDocument.GetElementById("category");
 
                 for (var i = 1;
-                     i < categoryElement.Children.Length;
+                     i < categoryElement?.Children.Length;
                      i++) //starting from 1, because the first category is "Select category"
                 {
                     var categoryOption = categoryElement.Children[i];

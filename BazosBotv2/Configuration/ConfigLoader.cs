@@ -1,5 +1,4 @@
 using BazosBotv2.Utilities;
-using Newtonsoft.Json;
 
 namespace BazosBotv2.Configuration;
 

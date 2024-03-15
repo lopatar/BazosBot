@@ -2,7 +2,6 @@ using System.Diagnostics;
 using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
-using Newtonsoft.Json;
 
 namespace BazosBotv2.Utilities;
 
@@ -68,11 +67,8 @@ internal static class Utils
         const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
         var outputString = "";
         var random = new Random();
-        
-        for (var i = 0; i < length; i++)
-        {
-            outputString += alphabet[random.Next(0, alphabet.Length)];
-        }
+
+        for (var i = 0; i < length; i++) outputString += alphabet[random.Next(0, alphabet.Length)];
 
         return outputString;
     }

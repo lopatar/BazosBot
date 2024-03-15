@@ -1,5 +1,3 @@
-using AngleSharp.Html.Dom;
-using AngleSharp.Html.Parser;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
