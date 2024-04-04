@@ -1,9 +1,7 @@
-using AngleSharp.Html.Parser;
 using BazosBotv2.Bazos.LocationProviders;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
-using Newtonsoft.Json;
 
 namespace BazosBotv2.Bazos;
 
@@ -98,7 +96,8 @@ internal sealed class Bazos
 
             if (executeAntiBan)
             {
-                Utils.Print($"Executing anti ban feature for listing: {deletedListing.Name}!", location: _config.BazosLocation);
+                Utils.Print($"Executing anti ban feature for listing: {deletedListing.Name}!",
+                    location: _config.BazosLocation);
                 deletedListing.AntiImageBan();
             }
 
