@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj": {}
+    "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj": {}
   },
   "projects": {
-    "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj": {
+    "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
+        "projectUniqueName": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj",
         "projectName": "BazosBotv2",
-        "projectPath": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
+        "projectPath": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj",
         "packagesPath": "/home/user/.nuget/packages/",
-        "outputPath": "/home/user/RiderProjects/BazosBot/BazosBotv2/obj/",
+        "outputPath": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/user/.nuget/NuGet/NuGet.Config"
@@ -40,15 +40,19 @@
           "dependencies": {
             "AngleSharp": {
               "target": "Package",
-              "version": "[0.17.1, )"
+              "version": "[1.1.2, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[13.0.2-beta2, )"
+              "version": "[13.0.3, )"
             },
             "SixLabors.ImageSharp": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.4, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
@@ -67,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }
