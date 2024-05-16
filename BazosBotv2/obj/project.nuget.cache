@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/4gWV8aU7KATOgIN/euc7bxPRbUOpXwax/o++jEG5WfR4DigTH+ZX54JFnC9c7YCjII6aTzDOEfhmOHgOvWX8A==",
+  "dgSpecHash": "J3m02WUb2yFsU74r8/KWGbFCOTDr9tCltbu2b5YaXMulmEKlZjQWgUWSQkJRzBEjgmED/UYgqUrZB+UOQJiMPQ==",
   "success": true,
-  "projectFilePath": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj",
+  "projectFilePath": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
   "expectedPackageFiles": [
     "/home/user/.nuget/packages/anglesharp/1.1.2/anglesharp.1.1.2.nupkg.sha512",
     "/home/user/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",

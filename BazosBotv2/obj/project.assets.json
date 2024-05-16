@@ -200,11 +200,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj",
+      "projectUniqueName": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
       "projectName": "BazosBotv2",
-      "projectPath": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/BazosBotv2.csproj",
+      "projectPath": "/home/user/RiderProjects/BazosBot/BazosBotv2/BazosBotv2.csproj",
       "packagesPath": "/home/user/.nuget/packages/",
-      "outputPath": "/home/user/Desktop/Vocalls/Mongo/BazosBot/BazosBotv2/obj/",
+      "outputPath": "/home/user/RiderProjects/BazosBot/BazosBotv2/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/user/.nuget/NuGet/NuGet.Config"
