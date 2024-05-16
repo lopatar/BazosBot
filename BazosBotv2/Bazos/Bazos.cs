@@ -1,7 +1,9 @@
+using AngleSharp.Html.Parser;
 using BazosBotv2.Bazos.LocationProviders;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
+using Newtonsoft.Json;
 
 namespace BazosBotv2.Bazos;
 

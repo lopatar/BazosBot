@@ -2,6 +2,7 @@ using System.Diagnostics;
 using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
+using Newtonsoft.Json;
 
 namespace BazosBotv2.Utilities;
 
