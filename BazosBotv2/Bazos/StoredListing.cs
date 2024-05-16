@@ -1,9 +1,6 @@
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 using BazosBotv2.Utilities;
-using Newtonsoft.Json;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace BazosBotv2.Bazos;
 
@@ -57,8 +54,9 @@ internal readonly struct StoredListing
             image[randomX, randomY] = new Bgr24(255, 255, 255);
             image.SaveAsJpeg(imgPath);
         }
-        
-        Utils.Print($"Executed anti image ban feature for listing: {Name}, affected: {ImagesCount} images!", location: BazosLocation);
+
+        Utils.Print($"Executed anti image ban feature for listing: {Name}, affected: {ImagesCount} images!",
+            location: BazosLocation);
     }
 
     public void RestoreListing(ILocationProvider locationProvider, Config config)
@@ -99,7 +97,8 @@ internal readonly struct StoredListing
         {
             var imgPath = $"{imagesDirectory}{i}.jpg";
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = Utils.UploadImage(imgBytes, $"{Utils.RandomString(16)}.jpg", locationProvider, config, SectionLink);
+            var bazosImgName = Utils.UploadImage(imgBytes, $"{Utils.RandomString(16)}.jpg", locationProvider, config,
+                SectionLink);
 
             Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
                 location: config.BazosLocation);
