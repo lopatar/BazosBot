@@ -206,6 +206,11 @@ internal sealed class Bazos
         using var htmlDocument = _htmlParser.ParseDocument(httpClient.Get(uri));
         var addForm = htmlDocument.GetElementById("formpridani");
 
+        if (addForm == null)
+        {
+            Utils.Exit("Invalid \"bid\" and \"bid\" Config.json values", true, _config.BazosLocation);
+        }
+
         foreach (var inputElement in addForm.GetElementsByTagName("INPUT"))
             if (inputElement.GetAttribute("type") == "hidden")
                 return new KeyValuePair<string, string>(inputElement.GetAttribute("name") ?? "",
