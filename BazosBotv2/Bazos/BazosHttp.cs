@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Authentication;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
 
@@ -16,7 +17,8 @@ internal sealed class BazosHttp : IDisposable
         _config = config;
         _httpClient = new HttpClient(new HttpClientHandler
         {
-            CookieContainer = InitCookieContainer()
+            CookieContainer = InitCookieContainer(),
+            SslProtocols = SslProtocols.Tls13 | SslProtocols.Tls12
         });
     }
 

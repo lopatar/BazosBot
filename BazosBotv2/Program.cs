@@ -27,6 +27,7 @@ foreach (var enabledConfig in enabledConfigs)
     catch (Exception ex)
     {
         Utils.Print("Unknown error occured!", true, enabledConfig.BazosLocation);
+        
         Utils.Exit($"Exception: {ex.StackTrace}\n {ex.Source}\n{ex.Message}", true, enabledConfig.BazosLocation);
     }
 
