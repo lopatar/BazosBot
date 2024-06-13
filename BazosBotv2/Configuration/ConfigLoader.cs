@@ -76,5 +76,16 @@ internal static class ConfigLoader
 
         if (!Directory.Exists(FilesDirectory)) Directory.CreateDirectory(FilesDirectory);
         if (!Directory.Exists(ListingDirectory)) Directory.CreateDirectory(ListingDirectory);
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var bazosType in BazosTypes)
+        {
+            var countryListingPath = Path.Combine(ListingDirectory, bazosType);
+
+            if (Directory.Exists(countryListingPath))
+                continue;
+
+            Directory.CreateDirectory(countryListingPath);
+        }
     }
 }

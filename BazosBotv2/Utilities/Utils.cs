@@ -38,6 +38,7 @@ internal static class Utils
 
         Print($"{message}, Press any key to exit...", error, location);
         Console.ReadKey();
+
         Process.GetCurrentProcess().Kill();
     }
 
@@ -54,7 +55,7 @@ internal static class Utils
 
     public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider)
     {
-        return listingLocationInfo.Substring(listingLocationInfo.Length - locationProvider.GetZipCodeLength())
+        return listingLocationInfo[^locationProvider.GetZipCodeLength()..]
             .Replace(" ", "");
     }
 

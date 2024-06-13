@@ -1,6 +1,6 @@
 namespace BazosBotv2.Configuration;
 
-internal struct Config
+internal readonly struct Config
 {
     public readonly string BazosLocation;
     public readonly bool Enabled;
