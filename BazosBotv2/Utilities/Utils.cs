@@ -44,10 +44,8 @@ internal static class Utils
 
     public static void DownloadImage(Uri url, string filePath)
     {
-        using var httpClient = new HttpClient
-        {
-            BaseAddress = url
-        };
+        using var httpClient = new HttpClient();
+        httpClient.BaseAddress = url;
 
         var imageBytes = httpClient.GetByteArrayAsync("").GetAwaiter().GetResult();
         File.WriteAllBytes(filePath, imageBytes);
