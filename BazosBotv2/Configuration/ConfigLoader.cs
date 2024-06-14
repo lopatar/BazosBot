@@ -95,8 +95,8 @@ internal static class ConfigLoader
             if (Directory.Exists(countryListingPath))
                 continue;
             
+            Utils.Print("Creating data directory", location: bazosType);
             Directory.CreateDirectory(countryListingPath);
-            Utils.Print("Created data directory", location: bazosType);
         }
     }
 }
