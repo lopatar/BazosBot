@@ -27,7 +27,7 @@ foreach (var enabledConfig in enabledConfigs)
     catch (Exception ex)
     {
         Utils.Print("Error occured!", true, enabledConfig.BazosLocation);
-        Utils.Exit($"Exception details: {ex}", true ,enabledConfig.BazosLocation);
+        Utils.Exit($"Exception details: {ex}", true, enabledConfig.BazosLocation);
     }
 
 Utils.Exit("Bot finished!");

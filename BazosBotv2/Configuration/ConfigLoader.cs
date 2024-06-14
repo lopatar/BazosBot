@@ -40,7 +40,8 @@ internal static class ConfigLoader
         {
             Utils.Exit($"Failed deserializing {ConfigFile}, incorrect format?", true);
         }
-
+    
+        //reject invalid BazosLocation
         foreach (var config in _loadedConfigs.Where(config => !BazosTypes.Contains(config.BazosLocation)))
             Utils.Exit(
                 $"{ConfigFile} does not have a correct {nameof(config.BazosLocation)}, value: {config.BazosLocation}",
@@ -62,7 +63,7 @@ internal static class ConfigLoader
             var config = new Config(bazosType, false, "First Last", "Password", "test@example.com", 606606606, 88888888,
                 "XYXYXYXYXY", 2, true, true);
 
-            Utils.Print($"Creating config for {nameof(config.BazosLocation)}: {bazosType}");
+            Utils.Print("Creating initial Config.json file", location: bazosType);
             dummyConfigs.Add(config);
         }
 
@@ -74,8 +75,17 @@ internal static class ConfigLoader
     {
         Utils.Print("Creating initial directory structure!");
 
-        if (!Directory.Exists(FilesDirectory)) Directory.CreateDirectory(FilesDirectory);
-        if (!Directory.Exists(ListingDirectory)) Directory.CreateDirectory(ListingDirectory);
+        if (!Directory.Exists(FilesDirectory))
+        {
+            Utils.Print("Creating files directory");
+            Directory.CreateDirectory(FilesDirectory);
+        }
+
+        if (!Directory.Exists(ListingDirectory))
+        {
+            Utils.Print("Creating listings directory");
+            Directory.CreateDirectory(ListingDirectory);
+        }
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var bazosType in BazosTypes)
@@ -84,8 +94,9 @@ internal static class ConfigLoader
 
             if (Directory.Exists(countryListingPath))
                 continue;
-
+            
             Directory.CreateDirectory(countryListingPath);
+            Utils.Print("Created data directory", location: bazosType);
         }
     }
 }
