@@ -68,11 +68,12 @@ internal sealed class Bazos
 
         if (_storedListings.Count > 0)
         {
-            Utils.Print("Do you want to execute anti image banning? [Y/y = yes, other = no]",
+            Utils.Print("Do you want to execute anti image banning? (Y/y = yes, other = no) [Default: yes]",
                 location: _config.BazosLocation, newLine: false);
+            
             var input = Console.ReadLine()?.ToUpper();
 
-            if (input == "Y")
+            if (input == null | input == "Y")
             {
                 Utils.Print("Anti banning feature will be executed!", location: _config.BazosLocation);
                 executeAntiBan = true;
