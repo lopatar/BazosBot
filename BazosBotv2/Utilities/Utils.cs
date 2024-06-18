@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
@@ -22,13 +24,18 @@ internal static class Utils
         if (error) Console.ForegroundColor = ConsoleColor.White;
     }
 
+    public static StringBuilder GetStringBuilder()
+    {
+        return new StringBuilder();
+    }
+    
     public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config,
         Uri sectionLink)
     {
         using var httpClient = new BazosHttp(locationProvider, config);
         using var requestContent = new MultipartFormDataContent("----WebKitFormBoundary" + RandomString(16u));
         requestContent.Add(new StreamContent(new MemoryStream(imgData)), "file[0]", imgName);
-        var httpResponse = httpClient.Post(new Uri(sectionLink + "upload.php"), requestContent);
+        var httpResponse = httpClient.Post(sectionLink + "upload.php", requestContent);
         return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
     }
 
@@ -62,14 +69,19 @@ internal static class Utils
         return uint.Parse(text.Where(char.IsDigit).ToArray());
     }
 
+    public static bool AskYesNoQuestion(string question, string bazosLocation)
+    {
+        Print($"{question} (Y/y = yes, other = no) [Default: yes]", location: bazosLocation, newLine: false);
+        var output = Console.ReadLine()?.ToUpper();
+        return output != null;
+    }
+    
     public static string RandomString(uint length)
     {
         const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
-        var outputString = "";
-        var random = new Random();
-
-        for (var i = 0; i < length; i++) outputString += alphabet[random.Next(0, alphabet.Length)];
-
-        return outputString;
+        var stringBuilder = new StringBuilder();
+        for (var i = 0; i < length; i++) stringBuilder.Append(alphabet[RandomNumberGenerator.GetInt32(alphabet.Length)]);
+        
+        return stringBuilder.ToString();
     }
 }
