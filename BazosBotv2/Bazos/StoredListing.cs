@@ -48,7 +48,7 @@ internal readonly struct StoredListing
 
         for (var i = 0; i < ImagesCount; i++)
         {
-            var imgPath = $"{listingPath}{i}.jpg";
+            var imgPath = DisposableStringBuilder.StringQuick(DisposableStringBuilder.StringQuick($"{listingPath}{i}.jpg"));
             using var image = Image.Load<Bgr24>(imgPath);
 
             var randomX = randomGen.Next(0, image.Size.Width);
@@ -58,7 +58,7 @@ internal readonly struct StoredListing
             image.SaveAsJpeg(imgPath);
         }
 
-        Utils.Print($"Executed anti image ban feature for listing: {Name}, affected: {ImagesCount} images!",
+        Utils.Print(DisposableStringBuilder.StringQuick($"Executed anti image ban feature for listing: {Name}, affected: {ImagesCount} images!"),
             location: BazosLocation);
     }
 
@@ -87,8 +87,8 @@ internal readonly struct StoredListing
             new KeyValuePair<string, string>("files[]", uploadedImage)));
         using var httpContent = new FormUrlEncodedContent(postContentPairs);
         using var httpClient = new BazosHttp(locationProvider, config);
-        httpClient.Post(new Uri(SectionLink + "insert.php"), httpContent);
-        Utils.Print($"Re-created listing: {Name}!!", location: config.BazosLocation);
+        httpClient.Post(new Uri(DisposableStringBuilder.StringQuick( SectionLink + "insert.php")), httpContent);
+        Utils.Print(DisposableStringBuilder.StringQuick($"Re-created listing: {Name}!!"), location: config.BazosLocation);
     }
 
     private List<string> UploadImagesToBazos(ILocationProvider locationProvider, Config config)
@@ -98,12 +98,12 @@ internal readonly struct StoredListing
 
         for (var i = 0; i < ImagesCount; i++)
         {
-            var imgPath = $"{imagesDirectory}{i}.jpg";
+            var imgPath = DisposableStringBuilder.StringQuick($"{imagesDirectory}{i}.jpg");
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = Utils.UploadImage(imgBytes, $"{Utils.RandomString(16)}.jpg", locationProvider, config,
+            var bazosImgName = Utils.UploadImage(imgBytes, DisposableStringBuilder.StringQuick( $"{Utils.RandomString(16)}.jpg"), locationProvider, config,
                 SectionLink);
 
-            Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
+            Utils.Print(DisposableStringBuilder.StringQuick($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}"),
                 location: config.BazosLocation);
             bazosImgNames.Add(bazosImgName);
         }
@@ -114,9 +114,9 @@ internal readonly struct StoredListing
     public void Save()
     {
         var json = JsonConvert.SerializeObject(this, Formatting.Indented);
-        var path = $"{GetListingPath()}Data.json";
+        var path = DisposableStringBuilder.StringQuick($"{GetListingPath()}Data.json");
 
-        Utils.Print($"Saving listing: {Name} data to {path}", location: BazosLocation);
+        Utils.Print(DisposableStringBuilder.StringQuick($"Saving listing: {Name} data to {path}"), location: BazosLocation);
         File.WriteAllText(path, json);
     }
 }

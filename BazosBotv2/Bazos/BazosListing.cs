@@ -28,7 +28,7 @@ internal sealed class BazosListing
         _id = id;
         Name = name;
         Link = link;
-        _sectionLink = new Uri($"https://{link.Host}/");
+        _sectionLink = new Uri(DisposableStringBuilder.StringQuick($"https://{link.Host}"));
         _price = price;
         _ageDays = ageDays;
         _postalCode = postalCode;
@@ -64,7 +64,7 @@ internal sealed class BazosListing
 
     private void DeleteFromBazos()
     {
-        var deleteUri = new Uri(_sectionLink + "deletei2.php");
+        var deleteUri = new Uri(DisposableStringBuilder.StringQuick(_sectionLink + "deletei2.php"));
         using var httpClient = new BazosHttp(_locationProvider, _config);
         using var httpContent = new FormUrlEncodedContent(new[]
         {
@@ -73,7 +73,7 @@ internal sealed class BazosListing
             new KeyValuePair<string, string>("idad", _id.ToString())
         });
 
-        Utils.Print($"Deleting listing: {Name} from {_sectionLink}", location: _config.BazosLocation);
+        Utils.Print(DisposableStringBuilder.StringQuick( $"Deleting listing: {Name} from {_sectionLink}"), location: _config.BazosLocation);
         httpClient.Post(deleteUri, httpContent);
     }
 
@@ -102,8 +102,8 @@ internal sealed class BazosListing
             new KeyValuePair<string, string>("files[]", uploadedImage)));
         using var httpContent = new FormUrlEncodedContent(postContentPairs);
         using var httpClient = new BazosHttp(_locationProvider, _config);
-        httpClient.Post(new Uri(_sectionLink + "insert.php"), httpContent);
-        Utils.Print($"Re-created listing: {Name}!!", location: _config.BazosLocation);
+        httpClient.Post(new Uri(DisposableStringBuilder.StringQuick( _sectionLink + "insert.php")), httpContent);
+        Utils.Print(DisposableStringBuilder.StringQuick($"Re-created listing: {Name}!!"), location: _config.BazosLocation);
     }
 
     private List<string> UploadImagesToBazos()
@@ -113,11 +113,11 @@ internal sealed class BazosListing
 
         for (var i = 0; i < _imagesList.Count; i++)
         {
-            var imgPath = $"{imagesDirectory}{i}.jpg";
+            var imgPath = DisposableStringBuilder.StringQuick( $"{imagesDirectory}{i}.jpg");
             var imgBytes = File.ReadAllBytes(imgPath);
-            var bazosImgName = Utils.UploadImage(imgBytes, $"{i}.jpg", _locationProvider, _config, _sectionLink);
+            var bazosImgName = Utils.UploadImage(imgBytes,DisposableStringBuilder.StringQuick($"{i}.jpg"), _locationProvider, _config, _sectionLink);
 
-            Utils.Print($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}",
+            Utils.Print(DisposableStringBuilder.StringQuick($"Uploaded image: {imgPath} for listing: {Name} as: {bazosImgName}"),
                 location: _config.BazosLocation);
             bazosImgNames.Add(bazosImgName);
         }
@@ -130,9 +130,9 @@ internal sealed class BazosListing
         for (var i = 0; i < _imagesList.Count; i++)
         {
             var imageLink = _imagesList[i];
-            var imagePath = $"{GetListingPath()}{i}.jpg";
+            var imagePath = DisposableStringBuilder.StringQuick($"{GetListingPath()}{i}.jpg");
 
-            Utils.Print($"Downloading image: {imagePath} for listing: {Name}", location: _config.BazosLocation);
+            Utils.Print(DisposableStringBuilder.StringQuick($"Downloading image: {imagePath} for listing: {Name}"), location: _config.BazosLocation);
             Utils.DownloadImage(new Uri(imageLink), imagePath);
         }
     }
@@ -143,11 +143,11 @@ internal sealed class BazosListing
 
         if (Directory.Exists(directoryPath))
         {
-            Utils.Print($"Deleting old image files for listing: {Name}", location: _config.BazosLocation);
+            Utils.Print(DisposableStringBuilder.StringQuick($"Deleting old image files for listing: {Name}"), location: _config.BazosLocation);
             Directory.Delete(directoryPath, true);
         }
 
-        Utils.Print($"Creating directory: {directoryPath} for listing: {Name}", location: _config.BazosLocation);
+        Utils.Print(DisposableStringBuilder.StringQuick($"Creating directory: {directoryPath} for listing: {Name}"), location: _config.BazosLocation);
         Directory.CreateDirectory(directoryPath);
     }
 
@@ -171,10 +171,10 @@ internal sealed class BazosListing
             var imgLink = imgElement.GetAttribute("src");
 
             if (imgLink == null || !imgLink.Contains(_id.ToString())) continue;
-
+            
             var imgLinkParts = imgLink.Split('/');
             imgLinkParts[4] = imgLinkParts[4].Replace("t", ""); //t = thumbnail, we want full resolution
-
+            
             imgLink = string.Join('/', imgLinkParts);
             list.Add(imgLink);
         }
@@ -182,7 +182,7 @@ internal sealed class BazosListing
         if (list.Count > 1)
             list.RemoveAt(0); //If there is more than 1 image, we remove the first one, as it's a duplicate of the 2nd
 
-        Utils.Print($"Got {list.Count} image links for listing: {Name}", location: _config.BazosLocation);
+        Utils.Print(DisposableStringBuilder.StringQuick( $"Got {list.Count} image links for listing: {Name}"), location: _config.BazosLocation);
         return list;
     }
 
@@ -190,7 +190,7 @@ internal sealed class BazosListing
     {
         var dirName = Path.GetInvalidPathChars()
             .Aggregate(Name, (current, invalidPathChar) => current.Replace(invalidPathChar, '-'));
-        return $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{dirName}/";
+        return DisposableStringBuilder.StringQuick($"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/{dirName}/");
     }
 
     private StoredListing ToStoredListing(Uri link)

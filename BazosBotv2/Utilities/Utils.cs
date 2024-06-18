@@ -9,7 +9,7 @@ namespace BazosBotv2.Utilities;
 
 internal static class Utils
 {
-    public static void Print(string message, bool error = false, string location = "", bool newLine = true)
+    public static void Print(string message, bool error = false, string location = "", bool newLine = true, ConsoleColor consoleColor = ConsoleColor.White)
     {
         if (error) Console.ForegroundColor = ConsoleColor.Red;
 
@@ -20,13 +20,12 @@ internal static class Utils
             : $"[BazosBot] [{location.ToUpper()}] {message}");
 
         if (newLine)
-        {
-            stringBuilder.Append(Environment.NewLine);
+        { 
             Console.WriteLine(stringBuilder.ToString());
         }
         else
         {
-            Console.Write(stringBuilder.ToString());
+           Console.Write(stringBuilder.ToString());
         }
 
         if (error) Console.ForegroundColor = ConsoleColor.White;
@@ -74,7 +73,7 @@ internal static class Utils
 
     public static bool AskYesNoQuestion(string question, string bazosLocation)
     {
-        Print($"{question} (Y/y = yes, other = no) [Default: yes]", location: bazosLocation, newLine: false);
+        Print(DisposableStringBuilder.StringQuick( $"{question} (Y/y = yes, other = no) [Default: yes]"), location: bazosLocation, newLine: false);
         var output = Console.ReadLine()?.ToUpper();
         return output != null;
     }

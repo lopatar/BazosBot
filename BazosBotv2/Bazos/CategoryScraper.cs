@@ -55,7 +55,7 @@ internal sealed class CategoryScraper
             try
             {
                 var uri = new Uri(
-                    $"https://{sectionName}.{_locationProvider.GetUri().Host}/{_locationProvider.GetAddListingPath()}");
+                    DisposableStringBuilder.StringQuick($"https://{sectionName}.{_locationProvider.GetUri().Host}/{_locationProvider.GetAddListingPath()}"));
                 using var httpClient = new BazosHttp(_locationProvider, _config);
                 using var htmlDocument = _htmlParser.ParseDocument(httpClient.Get(uri));
                 var categoryElement = htmlDocument.GetElementById("category");
@@ -76,11 +76,11 @@ internal sealed class CategoryScraper
             catch
             {
                 Utils.Exit(
-                    $"Could not access section: {sectionName} categories! Please check that your Config.json contains the valid values!",
+                       DisposableStringBuilder.StringQuick($"Could not access section: {sectionName} categories! Please check that your Config.json contains the valid values!"),
                     true, _config.BazosLocation);
             }
 
-        Utils.Print($"Scraped {categoryCount} categories in {_sectionCategoryIds.Count} sections!",
+        Utils.Print(DisposableStringBuilder.StringQuick($"Scraped {categoryCount} categories in {_sectionCategoryIds.Count} sections!"),
             location: _config.BazosLocation);
     }
 }

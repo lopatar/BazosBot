@@ -12,13 +12,13 @@ foreach (var enabledConfig in enabledConfigs)
     {
         var bazos = new Bazos(enabledConfig);
         var dueListings = bazos.GetDueListings();
-        Utils.Print($"Got {dueListings.Count} due listings! Press any key to continue...",
+        Utils.Print(DisposableStringBuilder.StringQuick( $"Got {dueListings.Count} due listings! Press any key to continue..."),
             location: enabledConfig.BazosLocation);
         Console.ReadKey();
 
         foreach (var listing in dueListings)
         {
-            Utils.Print($"Trying to renew listing: {listing.Name}", location: enabledConfig.BazosLocation);
+            Utils.Print(DisposableStringBuilder.StringQuick($"Trying to renew listing: {listing.Name}"), location: enabledConfig.BazosLocation);
             listing.Renew();
         }
 
@@ -27,7 +27,7 @@ foreach (var enabledConfig in enabledConfigs)
     catch (Exception ex)
     {
         Utils.Print("Error occured!", true, enabledConfig.BazosLocation);
-        Utils.Exit($"Exception details: {ex}", true, enabledConfig.BazosLocation);
+        Utils.Exit(DisposableStringBuilder.StringQuick($"Exception details: {ex}"), true, enabledConfig.BazosLocation);
     }
 
 Utils.Exit("Bot finished!");

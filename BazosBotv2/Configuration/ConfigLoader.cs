@@ -24,7 +24,7 @@ internal static class ConfigLoader
         if (!File.Exists(ConfigFile))
         {
             CreateDummyConfigs();
-            Utils.Print($"Created initial config file {ConfigFile}, please edit it. Press any key to continue!");
+            Utils.Print(DisposableStringBuilder.StringQuick( $"Created initial config file {ConfigFile}, please edit it. Press any key to continue!"));
             Console.ReadKey();
 
             LoadConfigs(); //re-load the configs
@@ -38,13 +38,13 @@ internal static class ConfigLoader
         }
         catch
         {
-            Utils.Exit($"Failed deserializing {ConfigFile}, incorrect format?", true);
+            Utils.Exit(DisposableStringBuilder.StringQuick( $"Failed deserializing {ConfigFile}, incorrect format?"), true);
         }
 
         //reject invalid BazosLocation
         foreach (var config in _loadedConfigs.Where(config => !BazosTypes.Contains(config.BazosLocation)))
             Utils.Exit(
-                $"{ConfigFile} does not have a correct {nameof(config.BazosLocation)}, value: {config.BazosLocation}",
+                 DisposableStringBuilder.StringQuick($"{ConfigFile} does not have a correct {nameof(config.BazosLocation)}, value: {config.BazosLocation}"),
                 true);
     }
 
