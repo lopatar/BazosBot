@@ -44,7 +44,7 @@ internal static class Utils
     {
         if (!error) Console.ForegroundColor = ConsoleColor.Yellow;
         
-        Print(DisposableStringBuilder.GetStringQuick($"{message}, Press any key to exit..."), error, location);
+        Print(DisposableStringBuilder.StringQuick($"{message}, Press any key to exit..."), error, location);
         Console.ReadKey();
 
         Process.GetCurrentProcess().Kill();
