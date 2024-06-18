@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
         <ApplicationIcon>bazosbot.ico</ApplicationIcon>
         <TargetFrameworks>net8.0;net8.0-windows;net6.0;net6.0-windows</TargetFrameworks>
+        <AssemblyVersion>1.2.2.0</AssemblyVersion>
+        <FileVersion>1.2.2.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
