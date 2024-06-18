@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using BazosBotv2.Bazos;
+﻿using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Utilities;
 

@@ -25,11 +25,13 @@ internal static class Utils
             Console.WriteLine(stringBuilder.ToString());
         }
         else
+        {
             Console.Write(stringBuilder.ToString());
+        }
 
         if (error) Console.ForegroundColor = ConsoleColor.White;
     }
-    
+
     public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config,
         Uri sectionLink)
     {
@@ -39,11 +41,11 @@ internal static class Utils
         var httpResponse = httpClient.Post(sectionLink + "upload.php", requestContent);
         return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
     }
-    
+
     public static void Exit(string message = "", bool error = false, string location = "")
     {
         if (!error) Console.ForegroundColor = ConsoleColor.Yellow;
-        
+
         Print(DisposableStringBuilder.StringQuick($"{message}, Press any key to exit..."), error, location);
         Console.ReadKey();
 
@@ -59,11 +61,16 @@ internal static class Utils
         File.WriteAllBytes(filePath, imageBytes);
     }
 
-    public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider) =>
-        listingLocationInfo[^locationProvider.GetZipCodeLength()..]
+    public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider)
+    {
+        return listingLocationInfo[^locationProvider.GetZipCodeLength()..]
             .Replace(" ", "");
+    }
 
-    public static uint ExtractUintFromString(string text) => uint.Parse(text.Where(char.IsDigit).ToArray());
+    public static uint ExtractUintFromString(string text)
+    {
+        return uint.Parse(text.Where(char.IsDigit).ToArray());
+    }
 
     public static bool AskYesNoQuestion(string question, string bazosLocation)
     {

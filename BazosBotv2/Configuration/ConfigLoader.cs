@@ -40,7 +40,7 @@ internal static class ConfigLoader
         {
             Utils.Exit($"Failed deserializing {ConfigFile}, incorrect format?", true);
         }
-    
+
         //reject invalid BazosLocation
         foreach (var config in _loadedConfigs.Where(config => !BazosTypes.Contains(config.BazosLocation)))
             Utils.Exit(
@@ -94,7 +94,7 @@ internal static class ConfigLoader
 
             if (Directory.Exists(countryListingPath))
                 continue;
-            
+
             Utils.Print("Creating data directory", location: bazosType);
             Directory.CreateDirectory(countryListingPath);
         }

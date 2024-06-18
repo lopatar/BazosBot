@@ -1,6 +1,4 @@
-﻿using System.Net.WebSockets;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 
 namespace BazosBotv2.Utilities;
 
@@ -12,13 +10,17 @@ internal class DisposableStringBuilder : IDisposable
 
     private DisposableStringBuilder() => _stringBuilder = new StringBuilder();
 
-    public void Append(string text) => _stringBuilder.Append(text);
-    public void Append(char character) => _stringBuilder.Append(character);
-    public void Replace(string oldString, string newString) => _stringBuilder.Replace(oldString, newString);
-    public void Replace(char oldChar, char newChar) => _stringBuilder.Replace(oldChar, newChar);
-    public new string ToString() => _stringBuilder.ToString();
-
     public void Dispose() => _stringBuilder.Clear();
+
+    public void Append(string text) => _stringBuilder.Append(text);
+
+    public void Append(char character) => _stringBuilder.Append(character);
+
+    public void Replace(string oldString, string newString) => _stringBuilder.Replace(oldString, newString);
+
+    public void Replace(char oldChar, char newChar) => _stringBuilder.Replace(oldChar, newChar);
+
+    public new string ToString() => _stringBuilder.ToString();
 
     public static string StringQuick(string text)
     {
@@ -27,13 +29,7 @@ internal class DisposableStringBuilder : IDisposable
         return stringBuilder.ToString();
     }
 
-    public static DisposableStringBuilder Get()
-    {
-        return new DisposableStringBuilder();
-    }
+    public static DisposableStringBuilder Get() => new();
 
-    public static DisposableStringBuilder Get(int capacity)
-    {
-        return new DisposableStringBuilder(capacity);
-    }
+    public static DisposableStringBuilder Get(int capacity) => new(capacity);
 }

@@ -26,7 +26,9 @@ internal sealed class Bazos
 
         var validationField = InitValidationField();
         _locationProvider.SetInputValidationField(validationField);
-        Utils.Print(DisposableStringBuilder.StringQuick($"Got add listing validation field {validationField.Key} => {validationField.Value}"),
+        Utils.Print(
+            DisposableStringBuilder.StringQuick(
+                $"Got add listing validation field {validationField.Key} => {validationField.Value}"),
             location: _config.BazosLocation);
 
         Utils.Print("Initialized BazosBot, press any key to fetch listings!", location: _config.BazosLocation);
@@ -48,7 +50,7 @@ internal sealed class Bazos
     {
         Utils.Print("Restorer enabled! Loading stored listings!", location: _config.BazosLocation);
 
-        var path = DisposableStringBuilder.StringQuick( $"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/");
+        var path = DisposableStringBuilder.StringQuick($"{ConfigLoader.ListingDirectory}{_config.BazosLocation}/");
         var directories = Directory.EnumerateDirectories(path);
 
         foreach (var directoryPath in directories)
@@ -60,16 +62,17 @@ internal sealed class Bazos
             if (!ListingUrlExists(storedListing.Link)) _storedListings.Add(storedListing);
         }
 
-        Utils.Print(DisposableStringBuilder.StringQuick($"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!"),
+        Utils.Print(
+            DisposableStringBuilder.StringQuick(
+                $"Got {_storedListings.Count} stored listings that have been deleted! Press any key to continue!"),
             location: _config.BazosLocation);
         Console.ReadKey();
 
         var executeAntiBan = false;
 
         if (_storedListings.Count > 0)
-        {
-            executeAntiBan = Utils.AskYesNoQuestion("Do you want to execute anti image banning?", _config.BazosLocation);
-        }
+            executeAntiBan =
+                Utils.AskYesNoQuestion("Do you want to execute anti image banning?", _config.BazosLocation);
 
         //If restored at least 1 listing
         var restoredListing = false;
@@ -77,19 +80,22 @@ internal sealed class Bazos
         foreach (var deletedListing in _storedListings)
         {
             var restoreDeletedListing = Utils.AskYesNoQuestion(DisposableStringBuilder.StringQuick(
-                    $"Do you want to restore deleted listing: {deletedListing.Name}?"), _config.BazosLocation);
-            
+                $"Do you want to restore deleted listing: {deletedListing.Name}?"), _config.BazosLocation);
+
             // ReSharper disable once InvertIf
             if (!restoreDeletedListing)
             {
-                Utils.Print(DisposableStringBuilder.StringQuick($"Skipping restoring deleted listing: {deletedListing.Name}"),
+                Utils.Print(
+                    DisposableStringBuilder.StringQuick($"Skipping restoring deleted listing: {deletedListing.Name}"),
                     location: _config.BazosLocation);
                 continue;
             }
 
             if (executeAntiBan)
             {
-                Utils.Print(DisposableStringBuilder.StringQuick($"Executing anti ban feature for listing: {deletedListing.Name}!"),
+                Utils.Print(
+                    DisposableStringBuilder.StringQuick(
+                        $"Executing anti ban feature for listing: {deletedListing.Name}!"),
                     location: _config.BazosLocation);
                 deletedListing.AntiImageBan();
             }
@@ -143,7 +149,8 @@ internal sealed class Bazos
 
                         if (listingDateString.Contains("TOP") && _config.SkipTopListings)
                         {
-                            Utils.Print(DisposableStringBuilder.StringQuick($"Skipping TOP listing: {listingName}"), location: _config.BazosLocation);
+                            Utils.Print(DisposableStringBuilder.StringQuick($"Skipping TOP listing: {listingName}"),
+                                location: _config.BazosLocation);
                             skipCycle = true;
                             break;
                         }
@@ -173,7 +180,8 @@ internal sealed class Bazos
                 listingAge, _htmlParser, _locationProvider, _config, _categoryScraper));
         }
 
-        Utils.Print(DisposableStringBuilder.StringQuick($"Got {_listings.Count} listings!"), location: _config.BazosLocation);
+        Utils.Print(DisposableStringBuilder.StringQuick($"Got {_listings.Count} listings!"),
+            location: _config.BazosLocation);
     }
 
     private ILocationProvider InitLocationProvider()
