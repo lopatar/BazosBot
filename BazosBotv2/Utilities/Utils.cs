@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Security.Cryptography;
-using System.Text;
 using BazosBotv2.Bazos;
 using BazosBotv2.Configuration;
 using BazosBotv2.Interfaces;
@@ -14,19 +13,21 @@ internal static class Utils
     {
         if (error) Console.ForegroundColor = ConsoleColor.Red;
 
-        message = location == "" ? $"[BazosBot] {message}" : $"[BazosBot] [{location.ToUpper()}] {message}";
+        using var stringBuilder = DisposableStringBuilder.Get();
+
+        stringBuilder.Append(location == string.Empty
+            ? $"[BazosBot] {message}"
+            : $"[BazosBot] [{location.ToUpper()}] {message}");
 
         if (newLine)
-            Console.WriteLine(message);
+        {
+            stringBuilder.Append(Environment.NewLine);
+            Console.WriteLine(stringBuilder.ToString());
+        }
         else
-            Console.Write(message);
+            Console.Write(stringBuilder.ToString());
 
         if (error) Console.ForegroundColor = ConsoleColor.White;
-    }
-
-    public static StringBuilder GetStringBuilder()
-    {
-        return new StringBuilder();
     }
     
     public static string UploadImage(byte[] imgData, string imgName, ILocationProvider locationProvider, Config config,
@@ -38,12 +39,12 @@ internal static class Utils
         var httpResponse = httpClient.Post(sectionLink + "upload.php", requestContent);
         return JsonConvert.DeserializeObject<List<string>>(httpResponse)?[0] ?? "";
     }
-
+    
     public static void Exit(string message = "", bool error = false, string location = "")
     {
         if (!error) Console.ForegroundColor = ConsoleColor.Yellow;
-
-        Print($"{message}, Press any key to exit...", error, location);
+        
+        Print(DisposableStringBuilder.GetStringQuick($"{message}, Press any key to exit..."), error, location);
         Console.ReadKey();
 
         Process.GetCurrentProcess().Kill();
@@ -58,16 +59,11 @@ internal static class Utils
         File.WriteAllBytes(filePath, imageBytes);
     }
 
-    public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider)
-    {
-        return listingLocationInfo[^locationProvider.GetZipCodeLength()..]
+    public static string ExtractZipCodeFromLocation(string listingLocationInfo, ILocationProvider locationProvider) =>
+        listingLocationInfo[^locationProvider.GetZipCodeLength()..]
             .Replace(" ", "");
-    }
 
-    public static uint ExtractUintFromString(string text)
-    {
-        return uint.Parse(text.Where(char.IsDigit).ToArray());
-    }
+    public static uint ExtractUintFromString(string text) => uint.Parse(text.Where(char.IsDigit).ToArray());
 
     public static bool AskYesNoQuestion(string question, string bazosLocation)
     {
@@ -75,13 +71,14 @@ internal static class Utils
         var output = Console.ReadLine()?.ToUpper();
         return output != null;
     }
-    
+
     public static string RandomString(uint length)
     {
         const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
-        var stringBuilder = new StringBuilder();
-        for (var i = 0; i < length; i++) stringBuilder.Append(alphabet[RandomNumberGenerator.GetInt32(alphabet.Length)]);
-        
+        using var stringBuilder = DisposableStringBuilder.Get();
+        for (var i = 0; i < length; i++)
+            stringBuilder.Append(alphabet[RandomNumberGenerator.GetInt32(alphabet.Length)]);
+
         return stringBuilder.ToString();
     }
 }
